@@ -1,0 +1,210 @@
+    <div id="controlPanel" class="col-3 border-right border-warning" ng-init="init()">
+            
+        <div ng-controller="navigationController" ng-init="init()">
+                
+            <div class="row">
+                <!-- ----------------- LOGIN / LOGOUT ---------------->
+                <div class="col-5 p-2 clickable">
+                    <h5 ng-show="!connected" class="text-warning">
+                        <a ng-click="goLogin()"><span class="fas fa-sign-in-alt"></span> {{text.global.LOGIN}}</a>
+                    </h5>
+                        
+                    <h5 ng-show="connected" class="text-warning">
+                        <a ng-click="logout()"><span class="fas fa-sign-out-alt"></span> {{text.global.LOGOUT}}</a>
+                    </h5>
+                </div>
+                
+                <!-- ----------------- LEGENDS BUTTONS NAVIGATION ---------------->
+                <div class="offset-1" ng-show="connected">
+                    <small><span class="fas fa-cogs"></span> {{text.global.ASSISTED}} / <span class="fas fa-keyboard"></span> {{text.global.MANUAL}}</small>
+                </div>
+            </div>
+            
+            <!-- ----------------- BUTTONS NAVIGATION ---------------->
+
+            <div ng-show="connected">
+                <ul class="nav nav-pills">
+                    <label class="col-5">{{text.global.INSERTION}}</label>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedInsertion()">
+                        <span class="fas fa-cogs"></span>
+                    </li>
+                    <li class="btn btn-warning col-3 pt-2 active" ng-click="manualInsertion()">
+                        <span class="fas fa-keyboard"></span>
+                    </li>
+                </ul>
+                        
+                <ul class="nav nav-pills">
+                    <label class="col-5">{{text.global.VISUALISATION}}</label>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedVisualisation()">
+                        <span class="fas fa-cogs"></span>
+                    </li>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualVisualisation()">
+                        <span class="fas fa-keyboard"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ----------------- TITRE ---------------->
+
+        <div class="row justify-content-center">
+            <h2 class="text-warning">
+               <span class="fas fa-database"></span> {{text.manualInsertion.TITLE}}				
+            </h2>
+        </div>
+
+        <hr>
+
+        <!------------------- SUCCESS MESSAGE ---------------->
+
+        <div class="row text-center text-body" ng-show="success" id="success">
+            <div class=" mx-auto col-10 text-light border border-success">
+                <strong>
+                    <span class="fas fa-check-circle float-left p-1 text-success"></span>
+                    {{success}}
+                    <span class="fas fa-check-circle float-right p-1 text-success"></span>
+                </strong> 
+            </div>
+        </div>
+
+        <hr>
+       
+        <!-- ----------------- CITY ---------------->
+
+        <div class="row offset-1">
+            <h4 class="text-warning">
+                <span class="fas fa-city"></span> {{text.manualInsertion.CITY}}
+            </h4>
+            <small>{{text.global.ALPHABETICS_CHARACTERS_ONLY}}</small>
+            <input class="col-10" type="text" ng-model="city" name="city" required>
+        </div>
+
+        <hr>
+
+        <!-- ----------------- LATITUDE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-map-pin"></span> {{text.manualInsertion.LATITUDE}}
+            </h4>
+            <small>{{text.global.NUMBER_ONLY}}</small>
+            <input class="col-10" type="number" id="latitude" ng-model="latitude" name="Latitude" required oninput="initMap(  document.getElementById('longitude').value,  document.getElementById('latitude').value)">
+        </div>
+
+       <!-- ----------------- LONGITUDE ---------------->
+
+       <div class="row offset-1 pt-3">
+           <h4 class="text-warning">
+               <span class="fas fa-map-pin"></span> {{text.manualInsertion.LONGITUDE}}
+           </h4>
+           <small>{{text.global.NUMBER_ONLY}}</small>
+           <input class="col-10" type="number" id="longitude" ng-model="longitude" name="Longitude" required oninput="initMap(  document.getElementById('longitude').value,  document.getElementById('latitude').value)">
+       </div>
+
+       <hr>
+
+        <!-- ----------------- PERIOD ---------------->
+
+        <div class="row offset-1 pt-3">
+           <h4 class="text-warning">
+               <span class="fas fa-stopwatch"></span> {{text.manualInsertion.PERIOD}}
+           </h4>
+           <small>{{text.global.TIME_ONLY}}</small>
+           <input class="col-10" type="number" ng-model="period" name="period" required min="1"> 
+           <span class="text-warning" ng-style="{'margin-left':'0.5em'}">h</span>
+       </div>
+       
+        <!-- ----------------- GRANULARITY -------------- -->
+
+        <div class="row offset-1 pt-3">
+           <h4 class="text-warning">
+               <span class="fas fa-th-large"></span> {{text.manualInsertion.GRANULARITY}}
+           </h4>
+           <small>{{text.global.NUMBER_ONLY}}</small>
+           <input class="col-10" type="number" ng-model="granularity" name="granularity" required min="0">  
+           <span class="text-warning" ng-style="{'margin-left':'0.5em'}">m</span>
+        </div>
+       
+        <!-- ----------------- SEUIL -------------- -->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-car"></span> {{text.manualInsertion.THRESHOLD_CAR}}
+            </h4>
+            <small>{{text.global.NUMBER_ONLY}}</small>
+            <input class="col-10" type="number" ng-model="thresholdVehicule" name="seuil" required min="1">
+            <span class="text-warning" ng-style="{'margin-left':'0.5em'}">cars</span>
+        </div>
+
+        <!-- ----------------- TIME DIVISION -------------- -->
+        
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-stopwatch"></span> <span class="fas fa-arrows-alt-h"></span> {{text.manualInsertion.TIME_DIVISION}} 
+            </h4>
+            <small>{{text.global.TIMESTAMP_ONLY}}</small>
+            <input class="col-10" type="text" ng-model="timeDivisionStart" name="timeDivisionStart" required>
+            <input class="col-10" type="text" ng-model="timeDivisionEnd" name="timeDivisionEnd" required>
+        </div>
+
+        <!-- ----------------- SEQUENCE / DIRECTION -------------- -->
+        
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-directions"></span> {{text.manualInsertion.DIRECTION}} 
+            </h4>
+            <span class="col-10"><input type="radio" ng-model="direction" name="direction" value="true" required> {{text.global.TRUE}}</span>
+            <span class="col-10"><input type="radio" ng-model="direction" name="direction" value="false" required> {{text.global.FALSE}}</span>
+        </div>
+    
+        <hr>
+
+        <!-- ----------------- GRID FILE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-th"></span> {{text.manualInsertion.GRID_FILE}} 
+            </h4>
+            <small>{{text.global.TXT_ONLY}}</small>
+            <input type="file" id="addGridFile" title="gridFile" class="col-12" required/>
+        </div>
+        
+        <!-- ----------------- COLOR FILE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-fill-drip"></span> {{text.manualInsertion.COLOR_FILE}} 
+            </h4>
+            <small>{{text.global.TXT_ONLY}}</small>
+            <input type="file" id="addColorFile" title="colorFile" class="col-12" required/> 
+        </div>
+
+        <hr>
+
+        <!------------------- ERROR MESSAGE ---------------->
+
+        <div class="row text-center text-body" ng-show="error" id="error">
+            <div class=" mx-auto col-11 text-light border border-warning">
+                <strong>
+                    <span class="fas fa-exclamation-triangle float-left p-1 text-warning"></span>
+                    {{error}}
+                    <span class="fas fa-exclamation-triangle float-right p-1 text-warning"></span>
+                </strong> 
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ----------------- BUTTONS DISPLAY AND CLEAR INFORMATIONS ---------------->
+
+        <div class="row justify-content-center">
+            <button ng-click="insert()" class="btn btn-warning col-9"> 
+                <span class="fas fa-save"></span> 
+                {{text.manualInsertion.INSERT}} 
+            </button>
+        </div>
+
+        <hr>
+    </div>

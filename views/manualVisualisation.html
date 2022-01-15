@@ -1,0 +1,162 @@
+    <div id="controlPanel" class="col-3 border-right border-warning" ng-init="init()">
+        
+         <div ng-controller="navigationController" ng-init="init()">
+                
+            <div class="row">
+                <!-- ----------------- LOGIN / LOGOUT ---------------->
+                <div class="col-5 p-2 clickable">
+                    <h5 ng-show="!connected" class="text-warning">
+                        <a ng-click="goLogin()"><span class="fas fa-sign-in-alt"></span> {{text.global.LOGIN}}</a>
+                    </h5>
+                        
+                    <h5 ng-show="connected" class="text-warning">
+                        <a ng-click="logout()"><span class="fas fa-sign-out-alt"></span> {{text.global.LOGOUT}}</a>
+                    </h5>
+                </div>
+                
+                <!-- ----------------- LEGENDS BUTTONS NAVIGATION ---------------->
+                <div class="offset-1" ng-show="connected">
+                    <small><span class="fas fa-cogs"></span> {{text.global.ASSISTED}} / <span class="fas fa-keyboard"></span> {{text.global.MANUAL}}</small>
+                </div>
+            </div>
+          
+            <!-- ----------------- BUTTONS NAVIGATION ---------------->
+
+            <div ng-show="connected">
+                <ul class="nav nav-pills">
+                    <label class="col-5">{{text.global.INSERTION}}</label>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedInsertion()">
+                        <span class="fas fa-cogs"></span>
+                    </li>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualInsertion()">
+                        <span class="fas fa-keyboard"></span>
+                    </li>
+                </ul>
+                        
+                <ul class="nav nav-pills">
+                    <label class="col-5">{{text.global.VISUALISATION}}</label>
+                    <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedVisualisation()">
+                        <span class="fas fa-cogs"></span>
+                    </li>
+                    <li class="btn btn-warning col-3 pt-2 active" ng-click="manualVisualisation()">
+                        <span class="fas fa-keyboard"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ----------------- TITRE ---------------->
+
+        <div class="row justify-content-center">
+            <h2 class="text-warning">
+                <span class="fas fa-inbox"></span> {{text.manualVisualisation.TITLE}}		
+            </h2>
+        </div>
+
+        <hr>
+
+        <!------------------- ERROR MESSAGE ---------------->
+
+       <div class="row text-center text-body" ng-show="error" id="error">
+            <div class=" mx-auto col-10 text-light border border-warning">
+                <strong>
+                    <span class="fas fa-exclamation-triangle float-left p-1 text-warning"></span>
+                    {{error}}
+                    <span class="fas fa-exclamation-triangle float-right p-1 text-warning"></span>
+                </strong> 
+            </div>
+        </div>
+
+        <hr>
+        
+        <!-- ----------------- LATITUDE ---------------->
+
+        <div class="row offset-1">
+            <h4 class="text-warning">
+                <span class="fas fa-map-pin"></span> {{text.manualVisualisation.LATITUDE}}
+            </h4>
+            <small>{{text.global.NUMBER_ONLY}}</small>
+            <input class="col-10" type="number" id="newLatitude" ng-model="newLatitude" name="Latitude" required oninput="initMap(  document.getElementById('newLongitude').value,  document.getElementById('newLatitude').value)">
+        </div>
+
+        <!-- ----------------- LONGITUDE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-map-pin"></span> {{text.manualVisualisation.LONGITUDE}}
+            </h4>
+            <small>{{text.global.NUMBER_ONLY}}</small>
+            <input class="col-10" type="number" id="newLongitude" ng-model="newLongitude" name="Longitude" required oninput="initMap(  document.getElementById('newLongitude').value,  document.getElementById('newLatitude').value)">
+        </div>
+
+        <!-- ----------------- GRID FILE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-th"></span> {{text.manualVisualisation.GRID_FILE}}
+            </h4>
+            <small>{{text.global.TXT_ONLY}}</small>
+            <input type="file" id="gridFile" title="GridFile" class="col-12" required/>
+        </div>
+        
+        <!-- ----------------- COLOR FILE ---------------->
+
+        <div class="row offset-1 pt-3">
+            <h4 class="text-warning">
+                <span class="fas fa-fill-drip"></span> {{text.manualVisualisation.COLOR_FILE}}
+            </h4>
+            <small>{{text.global.TXT_ONLY}}</small>
+            <input type="file" id="colorFile" title="ColorFile" class="col-12" required/> 
+        </div>
+
+        <hr>
+
+        <!-- ----------------- BUTTONS DISPLAY AND CLEAR INFORMATIONS ---------------->
+
+        <div class="row justify-content-center">
+            <button ng-click="display( 'gridFile', 'colorFile' )" class="btn btn-warning col-9"> 
+                <span class="fas fa-map-marked-alt"></span> 
+                {{text.manualVisualisation.DISPLAY}}
+            </button>
+        </div>
+
+        <div class="row justify-content-center" ng-show="informationsIsDiplayOnMap">
+            <button ng-click="clearMap()" class="btn btn-outline-warning col-9">
+                <span class="fas fa-times"></span>
+                {{text.manualVisualisation.CLEAR}}
+            </button>
+        </div> 
+
+        <hr>
+
+        <!-- ----------------- MAP LEGENDS ---------------->
+
+        <div ng-controller="legendController" class="row">
+            <div ng-repeat="element in legend" class="col-6" ng-show="informationsIsDiplayOnMap">
+                <div class="carreLegend" ng-style="{'background-color': element.color}">
+                    <div ng-style="{'margin-left': '1.7em'}">{{element.name | uppercase}}</div>
+                </div>
+            </div>
+
+            <div ng-show="!informationsIsDiplayOnMap">
+                <div class="fixed-bottom text-center col-3 pb-4" ng-controller="navigationController" ng-init="init()">
+                    <span class="text-warning clickable" ng-click="home()" ng-show="!connected">
+                        <span class="fas fa-info-circle"></span>
+                        Learn more about us
+                    </span>
+        
+                    <hr ng-show="!connected">
+                </div>
+            </div>
+           
+        </div>
+
+        <hr>
+
+        <!-- ----------------- MORE ABOUT ---------------->
+
+        
+
+    </div>

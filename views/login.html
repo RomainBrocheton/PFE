@@ -1,0 +1,80 @@
+<div id="controlPanel" class="col-3 border-right border-warning" ng-init="init()">
+        
+        <div ng-controller="navigationController" ng-init="init()">
+               
+           <div class="row">
+               <!-- ----------------- BACK ---------------->
+               <div class="col-5 p-2 clickable">
+                   <h5 class="text-warning">
+                       <a ng-click="manualVisualisation()"><span class="fas fa-arrow-left"></span> {{text.global.BACK}}</a>
+                   </h5>
+               </div>
+           </div>
+
+       </div>
+
+       <hr>
+
+       <!-- ----------------- TITRE ---------------->
+
+       <div class="row justify-content-center">
+           <h2 class="text-warning">
+               <span class="fas fa-lock"></span> {{text.login.TITLE}}
+           </h2>
+       </div>
+
+       <hr>
+       
+       <!------------------- ERROR MESSAGE ---------------->
+
+       <div class="row text-center text-body" ng-show="error" id="error">
+            <div class=" mx-auto col-10 text-light border border-warning">
+                <strong>
+                    <span class="fas fa-exclamation-triangle float-left p-1 text-warning"></span>
+                    {{error}}
+                    <span class="fas fa-exclamation-triangle float-right p-1 text-warning"></span>
+                </strong> 
+            </div>
+        </div>
+
+        <hr>
+
+       <form>
+            <!-- ----------------- EMAIL ---------------->
+
+            <div class="row offset-1">
+                <h4 class="text-warning">
+                    <span class="fas fa-envelope"></span> {{text.login.EMAIL}}
+                </h4>
+                <input class="col-10" type="email" ng-class="email ? '' : 'border-warning'" id="email" placeholder="{{text.login.EMAIL_PLACEHOLDER}}" ng-model="email" required>
+                </div>
+
+            <!-- ----------------- PASSWORD ---------------->
+
+            <div class="row offset-1 pt-3">
+                <h4 class="text-warning">
+                    <span class="fas fa-key"></span> {{text.login.PASSWORD}}
+                </h4>
+                <input class="col-10" type="password" ng-class="password ? '' : 'border-warning'" id="pwd" placeholder="{{text.login.PASSWORD_PLACEHOLDER}}" ng-model="password" required>
+            </div>
+
+            
+            <hr>
+
+            <!-- ----------------- BUTTONS LOGIN ---------------->
+
+            <div class="row justify-content-center">
+                <button ng-click="login()" class="btn btn-warning col-9" type="submit"> 
+                    <span class="fas fa-sign-in-alt"></span> 
+                    {{text.login.LOGIN}}
+                </button>
+            </div>
+    
+        </form>
+
+       <hr>
+
+       <div class="justify-content-center clickable text-warning row" ng-controller="navigationController">
+            <small ng-click="goRegister()"><u>{{text.login.NOT_REGISTER}}</u></small>
+       </div>
+   </div>

@@ -1,0 +1,320 @@
+<div id="controlPanel" class="col-3 border-right border-warning" ng-init="init()">
+        
+    <div ng-controller="navigationController" ng-init="init()">
+           
+        <div class="row">
+           <!-- ----------------- LOGIN / LOGOUT ---------------->
+            <div class="col-5 p-2 clickable">
+                <h5 ng-show="!connected" class="text-warning">
+                    <a ng-click="goLogin()"><span class="fas fa-sign-in-alt"></span> {{text.global.LOGIN}}</a>
+                </h5>
+                   
+                <h5 ng-show="connected" class="text-warning">
+                    <a ng-click="logout()"><span class="fas fa-sign-out-alt"></span> {{text.global.LOGOUT}}</a>
+                </h5>
+            </div>
+           
+           <!-- ----------------- LEGENDS BUTTONS NAVIGATION ---------------->
+            <div class="offset-1" ng-show="connected">
+               <small><span class="fas fa-cogs"></span> {{text.global.ASSISTED}} / <span class="fas fa-keyboard"></span> {{text.global.MANUAL}}</small>
+            </div>
+        </div>
+     
+       <!-- ----------------- BUTTONS NAVIGATION ---------------->
+
+        <div ng-show="connected">
+            <ul class="nav nav-pills">
+                <label class="col-5">{{text.global.INSERTION}}</label>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedInsertion()">
+                    <span class="fas fa-cogs"></span>
+                </li>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualInsertion()">
+                    <span class="fas fa-keyboard"></span>
+                </li>
+            </ul>
+                   
+            <ul class="nav nav-pills">
+                <label class="col-5">{{text.global.VISUALISATION}}</label>
+                <li class="btn btn-warning col-3 pt-2 active" ng-click="assistedVisualisation()">
+                   <span class="fas fa-cogs"></span>
+                </li>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualVisualisation()">
+                   <span class="fas fa-keyboard"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+   <!-- ----------------- TITRE ---------------->
+
+    <div class="row justify-content-center">
+        <h2 class="text-warning">
+            <span class="fas fa-database"></span> {{text.assistedVisualisation.TITLE}}				
+        </h2>
+    </div>
+
+    <hr>
+
+    <!------------------- ERROR MESSAGE ---------------->
+
+    <div class="row text-center text-body" ng-show="error" id="error">
+       <div class=" mx-auto col-10 text-light border border-warning">
+           <strong>
+               <span class="fas fa-exclamation-triangle float-left p-1 text-warning"></span>
+               {{error}}
+               <span class="fas fa-exclamation-triangle float-right p-1 text-warning"></span>
+           </strong> 
+       </div>
+    </div>
+
+    <hr>
+   
+    <!-- ----------------- CITY/DATA TITLE ---------------->
+
+    <div class="row offset-1">
+       <h4 class="text-warning">
+           <span class="fas fa-city"></span> {{text.assistedVisualisation.CITY}}
+       </h4>
+
+        <strong ng-hide="cities.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_CITY_AVAILABLE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="cities.length <= nbMaxParamRadio" ng-repeat="city in cities | orderBy: city" id="city" class="col-11">
+            <input type="radio" value="{{city}}" name="city" ng-click="periodAvailable()" ng-checked="cities.length == 1"> {{city}}<br>
+            <div ng-if="cities.length == 1" ng-init="periodAvailable()"></div>
+        </div> 
+
+        <select ng-if="cities.length > nbMaxParamRadio" class="option" ng-model="city" ng-change="periodAvailable()" id="city" class="col-11">
+            <option ng-repeat="city in cities" value="{{city}}">
+                {{city}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+    <!-- ----------------- Period ---------------->
+
+    <div class="row offset-1" ng-show="citySelected">
+       <h4 class="text-warning">
+           <span class="fas fa-stopwatch"></span> {{text.assistedVisualisation.PERIOD}}
+       </h4>
+       
+        <strong ng-hide="periods.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_PERIOD_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="periods.length <= nbMaxParamRadio" ng-repeat="period in periods | orderBy: period" id="period" class="col-11">
+            <input type="radio" value="{{period}}" name="period" ng-click="granularityAvailable()"  ng-checked="periods.length == 1"> {{period}}h<br>
+            <div ng-if="periods.length == 1" ng-init="granularityAvailable()"></div>
+        </div>
+    
+        <select ng-if="periods.length > nbMaxParamRadio" class="option" ng-model="period" ng-change="granularityAvailable()" id="period" class="col-11">
+            <option ng-repeat="period in periods" value="{{period}}">
+                {{period}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- Period ---------------->
+
+    <div class="row offset-1" ng-show="periodSelected">
+        <h4 class="text-warning">
+            <span class="fas fa-th-large"></span> {{text.assistedVisualisation.GRANULARITY}}
+        </h4>
+       
+        <strong ng-hide="granularities.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_PERIOD_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}h'{{text.error.assistedVisualisation.IN_THE_DATABASE}}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="granularities.length <= nbMaxParamRadio" ng-repeat="granularity in granularities | orderBy: granularity " id="granularity" class="col-11">
+            <input type="radio" ng-click="thresholdVehiculeAvailable()" name="granularity" value="{{granularity}}" ng-checked="granularities.length == 1"> {{granularity}}m<br>
+            <div ng-if="granularities.length == 1" ng-init="thresholdVehiculeAvailable()"></div>
+        </div> 
+    
+        <select ng-if="granularities.length > nbMaxParamRadio" class="option" ng-model="granularity" ng-change="thresholdVehiculeAvailable()" id="granularity" class="col-11">
+            <option ng-repeat="granularity in granularities" value="{{granularity}}">
+                {{granularity}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- THRESHOLD CAR ---------------->
+
+    <div class="row offset-1" ng-show="granularitySelected">
+        <h4 class="text-warning">
+            <span class="fas fa-car"></span> {{text.assistedVisualisation.THRESHOLD_CAR}} 
+        </h4>
+       
+        <strong ng-hide="thresholdVehicules.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_THRESHOLD_CAR_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}'{{text.error.assistedVisualisation.GRANULARITY}}'{{granularitySelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="thresholdVehicules.length <= nbMaxParamRadio" ng-repeat="thresholdVehicule in thresholdVehicules | orderBy: thresholdVehicule " id="thresholdVehicule" class="col-11">
+            <input type="radio" ng-click="timeDivisionStartAvailable()" name="thresholdVehicule" value="{{thresholdVehicule}}" ng-checked="thresholdVehicules.length == 1"> {{thresholdVehicule}}<br>
+            <div ng-if="thresholdVehicules.length == 1" ng-init="timeDivisionStartAvailable()"></div>
+        </div> 
+
+        <select ng-if="thresholdVehicules.length > nbMaxParamRadio" class="option" ng-model="thresholdVehicule" ng-change="timeDivisionStartAvailable()" id="thresholdVehicule" class="col-11">
+            <option ng-repeat="thresholdVehicule in thresholdVehicules" value="{{thresholdVehicule}}">
+                {{thresholdVehicule}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- TIME DIVISION START ---------------->
+
+    <div class="row offset-1" ng-show="thresholdVehiculeSelected">
+        <h4 class="text-warning">
+            <span class="fas fa-stopwatch"></span> <span class="fas fa-arrows-alt-h"></span> {{text.assistedVisualisation.TIME_DIVISION}}
+        </h4>
+       
+        <strong ng-hide="timeDivisionStarts.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_TIME_DIVISION_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}'{{text.error.assistedVisualisation.GRANULARITY}}'{{granularitySelected}}'{{text.error.assistedVisualisation.THRESHOLD_CAR}}'{{thresholdVehiculeSelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="timeDivisionStarts.length <= nbMaxParamRadio" ng-repeat="timeDivisionStart in timeDivisionStarts | orderBy: timeDivisionStart " id="timeDivisionStart" class="col-11">
+            <input type="radio" ng-click="timeDivisionEndAvailable()" name="timeDivisionStart" value="{{timeDivisionStart}}" ng-checked="timeDivisionStarts.length == 1"> {{timeDivisionStart}}<br>
+            <div ng-if="timeDivisionStarts.length == 1" ng-init="timeDivisionEndAvailable()"></div>
+        </div> 
+        
+        <select ng-if="timeDivisionStarts.length > nbMaxParamRadio" class="option" ng-model="timeDivisionStart" ng-change="timeDivisionEndAvailable()" id="timeDivisionStart" class="col-11">
+            <option ng-repeat="timeDivisionStart in timeDivisionStarts" value="{{timeDivisionStart}}">
+                {{timeDivisionStart}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- TIME DIVISION END ---------------->
+
+    <div class="row offset-1" ng-show="timeDivisionStartSelected">
+        <h4 class="text-warning">
+            <span class="fas fa-stopwatch"></span> <span class="fas fa-arrows-alt-h"></span> {{text.assistedVisualisation.TIME_DIVISION}}
+        </h4>
+       
+        <strong ng-hide="timeDivisionEnds.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_TIME_DIVISION_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}'{{text.error.assistedVisualisation.GRANULARITY}}'{{granularitySelected}}'{{text.error.assistedVisualisation.THRESHOLD_CAR}}'{{thresholdVehiculeSelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="timeDivisionEnds.length <= nbMaxParamRadio" ng-repeat="timeDivisionEnd in timeDivisionEnds | orderBy: timeDivisionEnd " id="timeDivisionEnd" class="col-11">
+            <input type="radio" ng-click="directionAvailable()" name="timeDivisionEnd" value="{{timeDivisionEnd}}" ng-checked="timeDivisionEnds.length == 1"> {{timeDivisionEnd}}<br>
+            <div ng-if="timeDivisionEnds.length == 1" ng-init="directionAvailable()"></div>
+        </div> 
+        
+        <select ng-if="timeDivisionEnds.length > nbMaxParamRadio" class="option" ng-model="timeDivisionEnd" ng-change="directionAvailable()" id="timeDivisionEnd" class="col-11">
+            <option ng-repeat="timeDivisionEnd in timeDivisionEnds" value="{{timeDivisionEnd}}">
+                {{timeDivisionEnd}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- Direction ---------------->
+
+    <div class="row offset-1" ng-show="timeDivisionEndSelected">
+        <h4 class="text-warning">
+            <span class="fas fa-arrows-alt-h"></span> {{text.assistedVisualisation.DIRECTION}}
+        </h4>
+       
+        <strong ng-hide="directions.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_TIME_DIVISION_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}'{{text.error.assistedVisualisation.GRANULARITY}}'{{granularitySelected}}'{{text.error.assistedVisualisation.THRESHOLD_CAR}}'{{thresholdVehiculeSelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+
+        <div ng-if="directions.length <= nbMaxParamRadio" ng-repeat="direction in directions | orderBy: direction " id="direction" class="col-11">
+            <input type="radio" ng-click="authorAvailable()" name="direction" value="{{direction}}" ng-checked="directions.length == 1"> {{direction}}<br>
+            <div ng-if="directions.length == 1" ng-init="authorAvailable()"></div>
+        </div> 
+        
+        <select ng-if="directions.length > nbMaxParamRadio" class="option" ng-model="direction" ng-change="authorAvailable()" id="direction" class="col-11">
+            <option ng-repeat="direction in directions" value="{{direction}}">
+                {{direction}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- Auhtor ---------------->
+
+    <div class="row offset-1" ng-show="directionSelected">
+        <h4 class="text-warning">
+            <span class="fas fa-user"></span> {{text.assistedVisualisation.AUTHOR}}
+        </h4>
+       
+        <strong ng-hide="authors.length > 0" class="offset-1 col-11">
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+            <span>{{text.error.assistedVisualisation.NO_AUTHOR_AVAILABLE}}'{{citySelected}}'{{text.error.assistedVisualisation.PERIOD}}'{{periodSelected}}'{{text.error.assistedVisualisation.GRANULARITY}}'{{granularitySelected}}'{{text.error.assistedVisualisation.THRESHOLD_CAR}}'{{thresholdVehiculeSelected}}'{{text.error.assistedVisualisation.TIME_DIVISION}}'{{timeDivisionStartSelected}}'{{text.error.assistedVisualisation.IN_THE_DATABASE}}</span>
+            <span class="fas fa-exclamation-triangle p-1 text-warning"></span>
+        </strong> 
+      
+        <div ng-if="authors.length <= nbMaxParamRadio" ng-repeat="author in authors | orderBy: author " id="author" class="col-11">
+            <input type="radio" ng-click="getFiles()" name="author" value="{{author}}" ng-checked="authors.length == 1"> {{author}}<br>
+            <div ng-if="authors.length == 1" ng-init="getFiles()"></div>
+        </div> 
+    
+        <select ng-if="authors.length > nbMaxParamRadio" class="option" ng-model="author" ng-change="getFiles()" id="author" class="col-11">
+            <option ng-repeat="author in authors" value="{{author}}">
+                {{author}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <div id="removeData" ng-show="authorSelected && isMyfile" class="clickable">
+        <h5 class="badge badge-danger" ng-click="deleteFiles()">{{text.assistedVisualisation.REMOVE_THIS_DATA}}</h5>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- LOADER ---------------->
+
+    <div id="loading" ng-if="loading < 100">
+        <h4>{{text.assistedVisualisation.LOADING}}</h4>
+           
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{loading}}" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                {{loading}}%
+            </div>
+        </div>
+        <i>{{loadingInfo}}</i>
+    </div>   
+
+    <!-- ----------------- MAP LEGENDS ---------------->
+
+    <div ng-controller="legendController" class="row" ng-show="authorSelected">
+        <div ng-repeat="element in legend" class="col-6">
+            <div class="carreLegend" ng-style="{'background-color': element.color}">
+               <div ng-style="{'margin-left': '1.7em'}">{{element.name | uppercase}}</div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+</div>

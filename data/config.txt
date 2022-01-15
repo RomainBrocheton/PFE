@@ -1,0 +1,4 @@
+# Fichier de configuration : periode ; nombre de clusters ; nombre de threads
+# Respecter le format des dates : yyyy-MM-dd,yyyy-MM-dd
+1900-01-01,3000-01-01
+1

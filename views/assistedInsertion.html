@@ -1,0 +1,219 @@
+<div id="controlPanel" class="col-3 border-right border-warning" ng-init="init()">
+            
+    <div ng-controller="navigationController" ng-init="init()">
+            
+        <div class="row">
+            <!-- ----------------- LOGIN / LOGOUT ---------------->
+            <div class="col-5 p-2 clickable">
+                <h5 ng-show="!connected" class="text-warning">
+                    <a ng-click="goLogin()"><span class="fas fa-sign-in-alt"></span> {{text.global.LOGIN}}</a>
+                </h5>
+                    
+                <h5 ng-show="connected" class="text-warning">
+                    <a ng-click="logout()"><span class="fas fa-sign-out-alt"></span> {{text.global.LOGOUT}}</a>
+                </h5>
+            </div>
+            
+            <!-- ----------------- LEGENDS BUTTONS NAVIGATION ---------------->
+            <div class="offset-1" ng-show="connected">
+                <small><span class="fas fa-cogs"></span> {{text.global.ASSISTED}} / <span class="fas fa-keyboard"></span> {{text.global.MANUAL}}</small>
+            </div>
+        </div>
+        
+        <!-- ----------------- BUTTONS NAVIGATION ---------------->
+
+        <div ng-show="connected">
+            <ul class="nav nav-pills">
+                <label class="col-5">{{text.global.INSERTION}}</label>
+                <li class="btn btn-warning col-3 pt-2 active" ng-click="assistedInsertion()">
+                    <span class="fas fa-cogs"></span>
+                </li>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualInsertion()">
+                    <span class="fas fa-keyboard"></span>
+                </li>
+            </ul>
+                    
+            <ul class="nav nav-pills">
+                <label class="col-5">{{text.global.VISUALISATION}}</label>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="assistedVisualisation()">
+                    <span class="fas fa-cogs"></span>
+                </li>
+                <li class="btn btn-outline-warning col-3 pt-2" ng-click="manualVisualisation()">
+                    <span class="fas fa-keyboard"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- TITRE ---------------->
+
+    <div class="row justify-content-center">
+        <h2 class="text-warning">
+           <span class="fas fa-database"></span> {{text.assistedInsertion.TITLE}}				
+        </h2>
+    </div>
+
+    <hr>
+
+    <!------------------- SUCCESS MESSAGE ---------------->
+
+    <div class="row text-center text-body" ng-show="success" id="success">
+        <div class=" mx-auto col-10 text-light border border-success">
+            <strong>
+                <span class="fas fa-check-circle float-left p-1 text-success"></span>
+                {{success}}
+                <span class="fas fa-check-circle float-right p-1 text-success"></span>
+            </strong> 
+        </div>
+    </div>
+
+    <hr>
+   
+    <!-- ----------------- RAW FILE  ---------------->
+
+    <div class="row offset-1">
+        <h5 class="text-warning clickable" ng-click="rawFile = !rawFile">
+            <input type="checkbox" ng-model="rawFile" name="rawFile" value=true required>
+            <span>{{text.assistedInsertion.RAW_FILE}}</span>
+        </h5>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- MULTIPLE FILES  ---------------->
+
+    <div class="row offset-1">
+        <h5 class="text-warning clickable" ng-click="multipleFiles = !multipleFiles">
+            <input type="checkbox" ng-model="multipleFiles" name="multipleFiles" value=true required>
+            <span>{{text.assistedInsertion.MULTIPLE_FILES}}</span>
+        </h5>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- SEPARATOR CHARACTER  ---------------->
+
+    <div class="row offset-1">
+        <h4 class="text-warning">
+            <span class="fas fa-i-cursor"></span> {{text.assistedInsertion.SEPARATOR_CHARATER}}
+        </h4>
+        <small>{{text.global.CHARACTER_ONLY}}</small>
+        <input class="col-10" type="text" ng-model="separationCharacter" name="separationCharacter" maxlength="1" required>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- FILES FORMAT ---------------->
+
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+    </script>
+
+    <div class="row offset-1">
+        <h4 class="text-warning"> 
+            <span class="fas fa-file"></span> {{text.assistedInsertion.FILE_FORMAT}}
+        </h4>
+        <small>{{text.assistedInsertion.HOVER_FOR_MORE_INFORMATIONS}}</small>
+        
+        <small>
+            <span ng-repeat="(key,val) in fileFormat" data-toggle="tooltip" data-placement="top" title="{{val.name}} => {{val.value}} " class="help">
+                {{key}}
+                <b class="text-warning">{{separationCharacter}}</b>
+            </span>
+            <span>[...]</span>
+        </small>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- GRID FILE FOLDER ---------------->
+
+    <div class="row offset-1 pt-3" ng-if="multipleFiles && !rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-folder"></span> {{text.assistedInsertion.GRID_FILE_FOLDER}}
+        </h4>
+        <small>{{text.global.TXTX_ONLY}}</small>
+        <input type="file" id="pathGridFolder" name="pathGridFolder" class="col-12" required webkitdirectory directory multiple>
+    </div>
+
+    <!-- ----------------- COLOR FILE FOLDER ---------------->
+    
+    <div class="row offset-1 pt-3" ng-if="multipleFiles && !rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-folder"></span> {{text.assistedInsertion.COLOR_FILE_FOLDER}}
+        </h4>
+        <small>{{text.global.TXTX_ONLY}}</small>
+        <input type="file" id="pathColorFolder" name="pathColorFolder" class="col-12" required webkitdirectory directory multiple>
+    </div>
+  
+    <!-- ----------------- GRID FILE ---------------->
+
+    <div class="row offset-1 pt-3" ng-if="!multipleFiles && !rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-th"></span> {{text.manualInsertion.GRID_FILE}}
+        </h4>
+        <small>{{text.global.TXT_ONLY}}</small>
+        <input type="file" id="gridFile" title="gridFile" class="col-12" required/>
+    </div>
+        
+    <!-- ----------------- COLOR FILE ---------------->
+
+    <div class="row offset-1 pt-3" ng-if="!multipleFiles && !rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-fill-drip"></span> {{text.manualInsertion.COLOR_FILE}} 
+        </h4>
+        <small>{{text.global.TXT_ONLY}}</small>
+        <input type="file" id="colorFile" title="colorFile" class="col-12" required/> 
+    </div>
+
+    <!-- ----------------- RAW FILE FOLDER ---------------->
+
+    <div class="row offset-1 pt-3" ng-if="multipleFiles && rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-folder"></span> {{text.assistedInsertion.RAW_FILE_FOLDER}}
+        </h4>
+        <small>{{text.global.TXTX_ONLY}}</small>
+       <input type="file" id="pathRawFolder" name="pathRawFolder" class="col-12" required webkitdirectory directory multiple>
+    </div>
+      
+    <!-- ----------------- RAW FILE ---------------->
+    
+    <div class="row offset-1 pt-3" ng-if="!multipleFiles&& rawFile">
+        <h4 class="text-warning">
+            <span class="fas fa-th"></span> {{text.assistedInsertion.RAW_FILE}} 
+        </h4>
+        <small>{{text.global.TXT_ONLY}}</small>
+        <input type="file" id="rawFile" title="rawFile" class="col-12" required/>
+    </div>
+            
+    <hr>
+
+    <!------------------- ERROR MESSAGE ---------------->
+
+    <div class="row text-center text-body" ng-show="error" id="error">
+        <div class=" mx-auto col-11 text-light border border-warning">
+            <strong>
+                <span class="fas fa-exclamation-triangle float-left p-1 text-warning"></span>
+                {{error}}
+                <span class="fas fa-exclamation-triangle float-right p-1 text-warning"></span>
+            </strong> 
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ----------------- BUTTONS DISPLAY AND CLEAR INFORMATIONS ---------------->
+
+    <div class="row justify-content-center">
+        <button ng-click="insert()" class="btn btn-warning col-9"> 
+            <span class="fas fa-save"></span> 
+            {{text.assistedInsertion.INSERT}}
+        </button>
+    </div>
+
+    <hr>
+</div>

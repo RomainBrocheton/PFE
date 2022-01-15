@@ -1,0 +1,199 @@
+{
+    "global" : {
+        "BACK" : "Back",
+
+        "LOGIN" : "Login",
+        "LOGOUT" : "Logout",
+
+        "ASSISTED" : "Assisted",
+        "MANUAL" : "Manual",
+
+        "INSERTION" : "Insertion",
+        "VISUALISATION" : "Visualisation",
+
+        "NUMBER_ONLY" : "* Number only",
+        "TXT_ONLY" : "* .txt file only",
+        "TXTX_ONLY" : "* .txt files only",
+        "CHARACTER_ONLY" : "* Character only",
+        "ALPHABETICS_CHARACTERS_ONLY" : "* Alphabetics characters only",
+        "TIME_ONLY" : "* Time only",
+        "TIMESTAMP_ONLY" : "* Timestamp only",
+        "BOOLEAN_ONLY" : "* Boolean only",
+        "TRUE" : "True",
+        "FALSE" : "False"
+    },
+
+    "error" : {
+        "global" : {
+            "BAD_FILENAME" : "Bad file name"
+        },
+        "login" : {
+            "EMAIL_IS_MISSING" : "Email is missing",
+            "PASSWORD_IS_MISSING" : "Password is missing"
+        },
+        "register" : {
+            "EMAIL_IS_MISSING" : "Email is missing",
+            "PASSWORD_IS_MISSING" : "Password is missing",
+            "CONFIRMATION_PASSWORD_IS_MISSING" : "Confirmation password is missing",
+            "PASSWORD_ARE_NOT_THE_SAME" : "Password are not the same"
+        },
+        "manualVisualisation" : {
+            "LATITUDE_IS_MISSING" : "Latitude is missing",
+            "LONGITUDE_IS_MISSING" : "Longitude is missing",
+            "GRID_FILE_IS_MISSING" : "Grid file is missing",
+            "COLOR_FILE_IS_MISSING" : "Color file is missing",
+            "EMPTY_GRID_FILE" : "Grid file is empty",
+            "EMPTY_COLOR_FILE" : "Color file is empty"
+        },
+        "assistedInsertion" : {
+            "SEPARATOR_CHARATER_IS_MISSING" : "Separator character is missing, set to ",
+            "GRID_FOLDER_IS_MISSING" : "Grids folder's is missing",
+            "COLOR_FOLDER_IS_MISSING" : "Colors folder's is missing",
+            "SOME_INFORMATIONS_ARE_MISSING_GRID_FILE" : "Some problem on at least one grid filename. Other files have been added. Problematic file(s) :",
+            "SOME_INFORMATIONS_ARE_MISSING_COLOR_FILE" : "At least one color file is missing. Other files have been added. File(s) missing :",
+            "NOTHING_TO_INSERT" : "Nothing to insert",
+            "GRID_FILE_IS_MISSING" : "Grid file is missing",
+            "COLOR_FILE_IS_MISSING" : "Color file is missing",
+            "RAW_FOLDER_IS_MISSING" : "Raws folder's is missing",
+            "RAW_FILE_IS_MISSING" : "Raw file is missing",
+            "EMPTY_GRID_FILE" : "Grid file is empty",
+            "NUMBER_OF_FILES" : "The number of files is not the same",
+            "BAD_GRID_FILE_FORMAT" : "Bad grid file format, check the section 'File format'",
+            "BAD_COLOR_FILE_FORMAT" : "Bad color file format, check the section 'File format'",
+            "GRID_FILE_AND_COLOR_FILE_NOT_COMPATIBLE" : "Grid file(s) and color file(s) not compatible"
+        },
+        "assistedVisualisation" : {
+            "NO_CITY_AVAILABLE" : "No city available",
+            "NO_PERIOD_AVAILABLE" : "No period available for the city ",
+            "NO_GRANULARITY_AVAILABLE" : "No granularity available for the city ",
+            "NO_THRESHOLD_CAR_AVAILABLE" : "No threshold car available for the city ",
+            "NO_TIME_DIVISION_AVAILABLE" : "No time division for the city ",
+            "NO_AUTHOR_AVAILABLE" : "No author for the city ",
+            "PERIOD" : ", the period ",
+            "GRANULARITY" : ", the granularity ",
+            "THRESHOLD_CAR" : ", the threshold car ",
+            "TIME_DIVISION" : ", the time division ",
+            "IN_THE_DATABASE" : " in the database",
+            "GRID_FILE_EMPTY" : "Grid file empty",
+            "COLOR_FILE_EMPTY" : "Color file empty"
+        },
+        "manualInsertion" : {
+            "CITY_IS_MISSING" : "City / Data title is missing",
+            "LATITUDE_IS_MISSING" : "Latitude is missing",
+            "LONGITUDE_IS_MISSING" : "Longitude is missing",
+            "PERIOD_IS_MISSING" : "Period is missing",
+            "TIME_DIVISION_START_IS_MISSING" : "Time division start is missing",
+            "TIME_DIVISION_END_IS_MISSING" : "Time division end is missing",
+            "GRANULARITY_IS_MISSING" : "Granularity is missing",
+            "CAR_THRESHOLD_IS_MISSING" : "Car's threshold is missing",
+            "GRID_FILE_IS_MISSING" : "Grid file is missing",
+            "COLOR_FILE_IS_MISSING" : "Color file is missing"
+        }
+    },
+
+    "home" : {
+        "TITLE" : "Traffic visualizer",
+        "SUBTITLE" : "Smartcity - PFE",
+        "TEAM" : "The team",
+        "TECHNOLOGIES" : "Technologies",
+        "LAST_MODIFICATION" : "Last modification on",
+        "ALL_RIGHT_RESERVED" : "All Rights Reserved"
+    },
+
+    "success" : {
+        "manualVisualisation" : {
+            "SUCCESSFUL_INSERTION" : "Successful insertion. If some data already exist they have been updated"
+        },
+        "assistedInsertion" : {
+            "SUCCESSFUL_INSERTION" : "Successful insertion. If some data already exist they have been updated"
+        }
+    },
+
+    "login" : {
+        "TITLE" : "Connection",
+        "EMAIL" : "Email",
+        "EMAIL_PLACEHOLDER" : "contact@smartcity.fr",
+        "PASSWORD" : "Password",
+        "PASSWORD_PLACEHOLDER" : "***********",
+        "LOGIN" : "Login",
+        "NOT_REGISTER" : "Not register ?"
+    },
+
+    "register" : {
+        "TITLE" : "Register",
+        "EMAIL" : "Email",
+        "EMAIL_PLACEHOLDER" : "contact@smartcity.fr",
+        "PASSWORD" : "Password",
+        "PASSWORD_PLACEHOLDER" : "***********",
+        "PASSWORD_CONFIRMATION" : "Confirm your Password",
+        "REGISTER" : "Create my account",
+        "ALREADY_REGISTER" : "Already register ?"
+    },
+
+    "manualVisualisation" : {
+        "TITLE" : "Local",
+        "LATITUDE" : "Latitude",
+        "LONGITUDE" : "Longitude",
+        "GRID_FILE" : "Grid file",
+        "COLOR_FILE" : "Color file",
+        "DISPLAY" : "Display the informations",
+        "CLEAR" : "Clear the map"
+    },
+
+    "assistedInsertion" : {
+        "TITLE" : "Database",
+        "FILE_FORMAT" : "Files format",
+        "FILE_TYPE" : "Files type",
+        "GRID_OR_COLOR" : "'grid' or 'color'",
+        "HOVER_FOR_MORE_INFORMATIONS" : "* Hover the numbers for more informations",
+        "CITY" : "City / Data title",
+        "GRANULARITY" : "Granularity",
+        "PERIOD" : "Period",
+        "THRESHOLD_VEHICULE" : "Threshold vehicle",
+        "LATITUDE" : "Latitude",
+        "LONGITUDE" : "Longitude",
+        "TIME_DIVISION_START" : "Time division start",
+        "TIME_DIVISION_END" : "Time division end",
+        "DIRECTION" : "Direction",
+        "SEPARATOR_CHARATER" : "Separator character",
+        "GRID_FILE_FOLDER" : "Grid file's folder",
+        "RAW_FILE_FOLDER" : "Raws file's folder",
+        "RAW_FILE" : "is raw(s) file(s)",
+        "MULTIPLE_FILES" : "is multiple files",
+        "COLOR_FILE_FOLDER" : "Color file's folder",
+        "INSERT" : "Insert the informations"
+    },
+
+    "assistedVisualisation" : {
+        "TITLE" : "Database",
+        "CITY" : "City / Data title",
+        "PERIOD" : "Period",
+        "GRANULARITY" : "Granularity",
+        "THRESHOLD_CAR" : "Threshold Car",
+        "DIRECTION" : "Direction",
+        "TIME_DIVISION" : "Time division",
+        "AUTHOR" : "Author",
+        "REMOVE_THIS_DATA" : "Remove this data",
+        "LOADING" : "Loading",
+        "CLEAR_THE_MAP" : "Clear the map ...",
+        "GET_GRID_FILE_INFO" : "Get the GridFile informations ...",
+        "GRID_FILE_TREATMENT" : "Treatment of the GridFile informations ...",
+        "GET_COLOR_FILE_INFO" : "Get the ColorFile informations ...",
+        "COLOR_FILE_TREATMENT" : "Treatment of the ColorFile informations ..."
+    },
+
+    "manualInsertion" : {
+        "TITLE" : "Database",
+        "CITY" : "City / Data title",
+        "LATITUDE" : "Latitude",
+        "LONGITUDE" : "Longitude",
+        "PERIOD" : "Period",
+        "GRANULARITY" : "Granularity",
+        "THRESHOLD_CAR" : "Threshold car",
+        "TIME_DIVISION" : "Time division",
+        "DIRECTION" : "Direction",
+        "GRID_FILE" : "Grid file",
+        "COLOR_FILE" : "Color file",
+        "INSERT" : "Insert the informations"
+    }
+}
