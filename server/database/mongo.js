@@ -6,7 +6,7 @@ var uuidv4 = require('uuid/v4');
 // ---------- Connection ----------
 
 //mongoose.connect('mongodb://smartcity:sm0rtcity@ds147390.mlab.com:47390/smartcity', function( error ){
-mongoose.connect('mongodb://localhost:27017/smartcity', function( error ){
+mongoose.connect('mongodb+srv://teamplay:mongodb-mongodb@teamplaycluster.quhje.mongodb.net/apinode?retryWrites=true&w=majority', function( error ){
     if( error ) {
         throw error; 
     } else {
