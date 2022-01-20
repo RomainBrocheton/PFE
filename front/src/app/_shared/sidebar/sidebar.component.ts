@@ -15,4 +15,9 @@ export class SidebarComponent implements OnInit {
     this.logged = this.auth.isLogged();
   }
 
+  logout(){
+    this.auth.logout();
+    this.logged = this.auth.isLogged();
+  }
+
 }

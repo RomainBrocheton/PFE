@@ -16,6 +16,7 @@ div#sidebar{
 
     img{
         width: 50%;
+        margin-left: 25%;
     }
 
     form{
@@ -23,7 +24,7 @@ div#sidebar{
         background-color: red;
     }
 
-    > div{
+    > div, .wrapper{
         width: 100%;
         margin: $margin 0;
 

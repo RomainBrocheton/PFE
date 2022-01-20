@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-visu-auto',
@@ -10,6 +11,10 @@ export class VisuAutoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  display(f: NgForm){
+
   }
 
 }

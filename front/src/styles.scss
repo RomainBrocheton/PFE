@@ -71,9 +71,14 @@ form{
     align-content: center;
     align-items: center;
 
-    input{
+    input, .input-file label{
         background: $background;
         color: $textLight;
+
+        &::placeholder{
+            color: $textLight;
+            opacity: 0.5;
+        }
 
         width: 100%;
         padding: $margin 1.5 * $margin;
@@ -81,18 +86,39 @@ form{
         outline: none;
         border: solid; border-width: 0; border-bottom-width: 1px;
         border-color: $primaryVariant;
+    }
 
-        &:last-of-type{
-            border-bottom-width: 0;
+    
+
+    .input-file{
+        width: 100%;
+        border: solid; border-width: 0; border-bottom-width: 1px;
+        border-color: $primaryVariant;
+        background: $background;
+
+        input{
+            display: none;
+        }
+        label{
+            display: block;
+            cursor: pointer;
+            opacity: 0.5;
         }
     }
 
     button{
         width: 100%;
         padding: $margin 1.5 * $margin;
-        background: $primaryVariant;
+        background: linear-gradient(to right, $primary 0, $primaryVariant 50%, $primaryVariant 100%);
+        background-repeat: no-repeat;
+        background-size: 200% 200%;
         color: $textLight;
         border: none; outline: none;
         cursor: pointer;
+        transition: all 400ms;
+
+        &:hover{
+            background-size: 100% 100%;
+        }
     }
 }

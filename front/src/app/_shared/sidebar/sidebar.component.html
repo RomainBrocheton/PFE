@@ -1,21 +1,23 @@
 <div id="sidebar">
-    <img src="/assets/branding/logo.png" alt="Logo">
+    <div class="wrapper">
+        <img src="/assets/branding/logo.png" alt="Logo">
 
-    <div id="navigation">
-        <div>
-            <p>Visualisation</p>
-            <nav>
-                <a routerLink="visu/automatique"><i class="fas fa-magic"></i> Automatique</a>
-                <a *ngIf="logged" routerLink="visu/manuelle"><i class="fas fa-wrench"></i> Manuelle</a>
-            </nav>
-        </div>
+        <div id="navigation">
+            <div>
+                <p>Visualisation</p>
+                <nav>
+                    <a routerLink="visu/automatique" routerLinkActive="active"><i class="fas fa-magic"></i> Automatique</a>
+                    <a *ngIf="logged" routerLink="visu/manuelle" routerLinkActive="active"><i class="fas fa-wrench"></i> Manuelle</a>
+                </nav>
+            </div>
 
-        <div *ngIf="logged">
-            <p>Insertion</p>
-            <nav>
-                <a routerLink="insert/automatique"><i class="fas fa-magic"></i> Automatique</a>
-                <a routerLink="insert/manuelle"><i class="fas fa-wrench"></i> Manuelle</a>
-            </nav>
+            <div *ngIf="logged">
+                <p>Insertion</p>
+                <nav>
+                    <a routerLink="insert/automatique" routerLinkActive="active"><i class="fas fa-magic"></i> Automatique</a>
+                    <a routerLink="insert/manuelle" routerLinkActive="active"><i class="fas fa-wrench"></i> Manuelle</a>
+                </nav>
+            </div>
         </div>
     </div>
 
@@ -25,11 +27,11 @@
 
     <div id="login">
         <nav *ngIf="!logged">
-            <a routerLink="connexion"><i class="fas fa-sign-in-alt"></i> Connexion</a>
-            <a routerLink="inscription"><i class="fas fa-user-plus"></i> Inscription</a>
+            <a routerLink="connexion" routerLinkActive="active"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+            <a routerLink="inscription" routerLinkActive="active"><i class="fas fa-user-plus"></i> Inscription</a>
         </nav>
         <nav *ngIf="logged">
-            <a routerLink="deconnexion"><i class="fas fa-sign-in-alt"></i> Déconnexion</a>
+            <a (click)="logout()"><i class="fas fa-sign-in-alt"></i> Déconnexion</a>
         </nav>
     </div>
 </div>

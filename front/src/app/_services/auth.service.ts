@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from './api.service';
 
+const LS_KEY = 'logged';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,15 +23,19 @@ export class AuthService {
   }
 
   getUser() : any{
-    return this.user;
+    return localStorage.getItem(LS_KEY) || false; 
   }
 
   setUser(user : any) : void{
-    this.user = user;
+    localStorage.setItem(LS_KEY, user);
+  }
+
+  logout(){
+    localStorage.removeItem(LS_KEY);
   }
 
   isLogged() : boolean{
-    return (this.user !== null);
+    return this.getUser() != false;
   }
 }
 
