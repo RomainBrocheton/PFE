@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import * as L from 'leaflet';
+import { SharingService } from '../_services/sharing.service';
 
 @Component({
   selector: 'app-map',
@@ -12,16 +13,21 @@ export class MapComponent implements AfterViewInit {
 
   private map : any;
 
-  constructor() { }
+  constructor(private sharedService : SharingService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.sharedService.sharedMessage.subscribe((data) => {
+      this.lat = data.lat;
+      this.lon = data.lon;
+      this.map.panTo(new L.LatLng(this.lat, this.lon));
+    });
   }
 
   private initMap(){
     this.map = L.map('map', {
       center: [this.lat, this.lon],
-      zoom: 3
+      zoom: 7
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
