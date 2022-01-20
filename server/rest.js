@@ -1,9 +1,13 @@
 //---------- Serveur Init ----------
 
 var port = process.env.PORT || 8080;
+var configDirectory = 'server';
+var viewsDirectory = './';
 
+var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var miscellaneous = require('./treatment/miscellaneous');
 
@@ -15,6 +19,8 @@ var app = express();
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
+//authorize access to public directory to server html, css, js, ...
+app.use( express.static( path.join( __dirname.substring( 0, __dirname.length-configDirectory.length ), viewsDirectory ) ) );
 
 app.listen(port);
 

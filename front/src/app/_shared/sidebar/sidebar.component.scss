@@ -1,0 +1,72 @@
+@import '../../../variables';
+
+div#sidebar{
+    width: 20vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+
+    background: linear-gradient(to bottom, #3a4177, #22274e);
+    padding: $margin 0;
+
+    img{
+        width: 50%;
+    }
+
+    form{
+        height: 50%; width: 100%;
+        background-color: red;
+    }
+
+    > div{
+        width: 100%;
+        margin: $margin 0;
+
+        p{
+            color: $primaryVariant;
+            margin: $margin;
+        }
+
+        nav{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-content: center;
+            align-items: flex-start;
+
+            a{
+                width: 100%;
+                padding: $margin;
+                text-decoration: none !important;
+                transition: all 400ms;
+
+                background-image: linear-gradient($surfaceDarkVariant, $surfaceDarkVariant);
+                background-repeat: no-repeat;
+                background-size: 0% 100%;
+
+                position: relative;
+
+                i{
+                    margin-right: $margin;
+                }
+
+                &:hover{
+                    background-size: 100% 100%;
+                }
+
+                &.active:after, &:hover:after{
+                    content: '';
+                    width: 5px; height: 100%;
+                    background-color: $primary;
+                    position: absolute; top: 0; left: 0;
+                }
+            }
+        }
+    }
+}

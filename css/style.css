@@ -1,0 +1,67 @@
+/* --------------------------- Html --------------------------- */
+
+html,body {
+	height: 100%;
+}
+
+li{
+	margin-top: 0.2em;
+	margin-right: 0.2em;
+}
+
+.nav-pills>label{
+	padding-top: 1em;
+}
+
+/* --------------------------- Classes --------------------------- */
+
+.clickable{
+	cursor: pointer;
+}
+
+.help{
+	cursor: help;
+}
+
+.carreLegend{
+	height: 1.5em;
+	width: 1.5em;
+	margin: 0.5em;
+	border: 1px solid white;
+}
+
+/* --------------------------- Id --------------------------- */
+
+#controlPanel{
+	color: white;
+	position: absolute;
+	height: 100%;
+	background: rgba(35, 35, 44, 1);
+
+	overflow: scroll;
+}
+
+#map {
+	height: 100%;
+}
+
+#removeData{
+	text-align: right;
+}
+
+#loading{
+	top: 40%;
+	left: 50%;
+	width: 20%;
+	padding: 1em;
+	text-align: center;
+	position: fixed;
+	background-color: rgba(35, 35, 44, 1);
+	border-radius: 1em;
+	z-index: 2;
+}
+
+#loading>i{
+	color: white;
+	padding : 0;
+}

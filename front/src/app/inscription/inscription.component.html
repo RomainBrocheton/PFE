@@ -1,0 +1,5 @@
+<form (ngSubmit)="inscription(f)" #f="ngForm">
+    <input type="email" name="email" placeholder="E-Mail" ngModel required>
+    <input type="password" name="password" placeholder="Mot de passe" ngModel required>
+    <button type="submit" [disabled]="f.invalid">Inscription</button>
+</form>

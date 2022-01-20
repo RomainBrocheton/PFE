@@ -1,1 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap');
+@import './variables';
+
+html, body, *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Montserrat';
+    font-weight: 200;
+}
+
+html, body{
+    color: $textLight;
+    font-size: $font;
+
+    background: $background;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    font-weight: 400;
+    color: $textLight
+}
+
+h1, .h1{
+    font-size: $font * 2;
+}
+
+h2, .h2{
+    font-size: $font * 1.75;
+}
+
+h3, .h3{
+    font-size: $font * 1.66;
+}
+
+h4, .h4{
+    font-size: $font * 1.5;
+}
+
+h5, .h5{
+    font-size: $font * 1.2;
+}
+
+h6, .h6{
+    font-size: $font;
+}
+
+/* Texts */
+a{
+    color: white;
+    text-decoration: underline;
+
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+.muted{
+    color: $textMuted;
+}
+
+form{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+
+    input{
+        background: $background;
+        color: $textLight;
+
+        width: 100%;
+        padding: $margin 1.5 * $margin;
+
+        outline: none;
+        border: solid; border-width: 0; border-bottom-width: 1px;
+        border-color: $primaryVariant;
+
+        &:last-of-type{
+            border-bottom-width: 0;
+        }
+    }
+
+    button{
+        width: 100%;
+        padding: $margin 1.5 * $margin;
+        background: $primaryVariant;
+        color: $textLight;
+        border: none; outline: none;
+        cursor: pointer;
+    }
+}
