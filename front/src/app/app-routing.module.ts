@@ -12,8 +12,8 @@ import { VisuManuComponent } from './visu-manu/visu-manu.component';
 const routes: Routes = [
   { 
     path: '', component: HomepageComponent, children: [
-      { path: '', component: VisuAutoComponent },
-      { path: 'visu', component: VisuAutoComponent },
+      { path: '', component: VisuManuComponent },
+      { path: 'visu', component: VisuManuComponent },
       { path: 'visu/automatique', component: VisuAutoComponent },
       { path: 'visu/manuelle', component: VisuManuComponent },
       { path: 'insert', component: InsertAutoComponent },

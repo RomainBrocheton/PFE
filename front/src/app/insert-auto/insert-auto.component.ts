@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-insert-auto',
@@ -12,4 +13,7 @@ export class InsertAutoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  insert(f: NgForm){
+    
+  }
 }

@@ -17,6 +17,10 @@ html, body{
     background: $background;
 }
 
+*{
+    scrollbar-width: thin;
+}
+
 /* Headings */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     font-weight: 400;
@@ -88,6 +92,11 @@ form{
         border-color: $primaryVariant;
     }
 
+    button:disabled{
+        background: $textMuted;
+        cursor: default;
+    }
+
     
 
     .input-file{
@@ -106,6 +115,35 @@ form{
         }
     }
 
+    .input-checkbox{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+
+        width: 100%;
+
+        background: $background;
+        color: $textLight;
+
+        padding: $margin 1.5 * $margin;
+
+        outline: none;
+        border: solid; border-width: 0; border-bottom-width: 1px;
+        border-color: $primaryVariant;
+
+        label{
+            width: 80%;
+            opacity: 0.5;
+        }
+    }
+
+    .noborder{
+        border-bottom-width: 0;
+    }
+
     button{
         width: 100%;
         padding: $margin 1.5 * $margin;
@@ -122,3 +160,4 @@ form{
         }
     }
 }
+

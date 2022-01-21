@@ -2,6 +2,11 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { SharingService } from '../_services/sharing.service';
 
+const ZOOM_INIT = 7;
+const ZOOM_IN = 12;
+const ZOOM_MAX = 18;
+const ZOOM_MIN = 5;
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -17,22 +22,26 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
+
     this.sharedService.sharedMessage.subscribe((data) => {
       this.lat = data.lat;
       this.lon = data.lon;
       this.map.panTo(new L.LatLng(this.lat, this.lon));
+
+      if(this.lat != 0 && this.lon != 0)
+        this.map.setZoom(ZOOM_IN);
     });
   }
 
   private initMap(){
     this.map = L.map('map', {
       center: [this.lat, this.lon],
-      zoom: 7
+      zoom: ZOOM_INIT
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3
+      maxZoom: ZOOM_MAX,
+      minZoom: ZOOM_MIN
     });
 
     tiles.addTo(this.map);

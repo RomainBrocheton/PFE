@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-insert-manu',
@@ -12,4 +13,7 @@ export class InsertManuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  display(f: NgForm){
+    
+  }
 }

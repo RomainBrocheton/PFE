@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SharingService } from '../_services/sharing.service';
 
@@ -8,18 +8,25 @@ import { SharingService } from '../_services/sharing.service';
   styleUrls: ['./visu-auto.component.scss']
 })
 export class VisuAutoComponent implements OnInit {
+  @ViewChild('f', {static: true}) ngForm : NgForm | undefined ;
+  formChangeSub : any;
 
   constructor(private sharedService : SharingService) { }
 
   ngOnInit(): void {
+    if(this.ngForm != undefined)
+      this.formChangeSub = this.ngForm.form.valueChanges.subscribe(x => {
+        if(x.lat == undefined || x.lat == "")
+          x.lat = 0;
+        if(x.lon == undefined || x.lon == "")
+          x.lon = 0;
+
+        this.sharedService.nextMessage({lat: x.lat, lon: x.lon});
+      });
   }
 
   display(f: NgForm){
     this.sharedService.nextMessage({lat: f.value.lat, lon: f.value.lon});
-  }
-
-  focusout(event : any){
-    console.log(event);
   }
 
 }

@@ -1,1 +1,27 @@
-<p>insert-manu works!</p>
+<form (ngSubmit)="display(f)" #f="ngForm">
+    <input type="text" name="city" placeholder="Ville" ngModel required>
+    <input type="text" name="lat" placeholder="Latitude" ngModel required>
+    <input type="text" name="lon" placeholder="Longitude" ngModel required>
+    <input type="text" name="period" placeholder="Période (h)" ngModel required>
+    <input type="text" name="granularity" placeholder="Granularité (m)" ngModel required>
+    <input type="text" name="seuil" placeholder="Seuil de voitures (voitures)" ngModel required>
+    <input type="text" name="timeDivisionStart" placeholder="Division du temps (timestamp)" ngModel required>
+    <input type="text" name="timeDivisionEnd" placeholder="Division du temps (timestamp)" ngModel required>
+    <div class="input-checkbox noborder">
+        <label for="directionTrue">Avec direction</label>
+        <input type="radio" name="direction" id="directionTrue" value="true" ngModel> 
+    </div>
+    <div class="input-checkbox">
+        <label for="directionFalse">Sans direction</label>
+        <input type="radio" name="direction" id="directionFalse" value="false" ngModel> 
+    </div>
+    <div class="input-file">
+        <label for="grid">Fichier Grid</label>
+        <input type="file" name="grid" id="grid" ngModel required accept=".txt">
+    </div>
+    <div class="input-file">
+        <label for="color">Fichier Color</label>
+        <input type="file" name="color" id="color" ngModel required accept=".txt">
+    </div>
+    <button type="submit" [disabled]="f.invalid">Insérer</button>
+</form>
