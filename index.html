@@ -6,49 +6,16 @@
 
 		<link rel="shortcut icon" type="image/x-icon" href="icons/favicon.ico"/>
 		
+		<!-- Balises CSS -->
+
 		<link rel="StyleSheet" type="text/css" href="css/style.css"/>
-
-		<!-- JQUERY --> 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-		<!-- POPPER --> 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-		
 		<!-- BOOTSTRAP --> 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-		<!-- ANGULAR --> 
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-route.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-resource.min.js"></script>
-
 		<!-- FONT AWESOME ICONS -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	
-		<!-- JS -->
-		<script src="js/app.js"></script>
-		<script src="js/map.js"></script>
+		<!-- OPENSTREETMAP -->
+		<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/> -->
 
-		<!-- FACTORY -->
-		<script src="js/service/fileFactory.js"></script>
-		<script src="js/service/dataFactory.js"></script>
-		<script src="js/service/connectionFactory.js"></script>
-		<script src="js/service/languageFactory.js"></script>
-
-		<!-- CONTROLLER -->
-		<script src="js/controller/assistedInsertionController.js"></script>
-		<script src="js/controller/assistedVisualisationController.js"></script>
-		<script src="js/controller/manualInsertionController.js"></script>
-		<script src="js/controller/homeController.js"></script>
-		<script src="js/controller/manualVisualisationController.js"></script>
-		<script src="js/controller/legendController.js"></script>
-		<script src="js/controller/navigationController.js"></script>
-		<script src="js/controller/connectionController.js"></script>
-
-		<!-- GOOGLE MAP -->
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeb5X7OAdj5OoplVXXkKV0cAkuEp4FxEY&callback=initMap"></script>
-				
 		<title>Trafic visualizer</title>
 	</head>
 
@@ -59,6 +26,43 @@
 		</div>	
 
 		<div ng-controller="navigationController" id="map" class="offset-3 col-9"></div>
-		
+
+
+
+		<!-- Balises Js -->
+
+		<!-- JQUERY --> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- POPPER --> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<!-- BOOTSTRAP -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<!-- ANGULAR --> 
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-resource.min.js"></script>
+		<!-- FACTORY -->
+		<script src="js/service/fileFactory.js"></script>
+		<script src="js/service/dataFactory.js"></script>
+		<script src="js/service/connectionFactory.js"></script>
+		<script src="js/service/languageFactory.js"></script>
+		<!-- CONTROLLER -->
+		<script src="js/controller/assistedInsertionController.js"></script>
+		<script src="js/controller/assistedVisualisationController.js"></script>
+		<script src="js/controller/manualInsertionController.js"></script>
+		<script src="js/controller/homeController.js"></script>
+		<script src="js/controller/manualVisualisationController.js"></script>
+		<script src="js/controller/legendController.js"></script>
+		<script src="js/controller/navigationController.js"></script>
+		<script src="js/controller/connectionController.js"></script>
+		<!-- GOOGLE MAP -->
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeb5X7OAdj5OoplVXXkKV0cAkuEp4FxEY&callback=initMap"></script>
+		<!-- OPENSTREETMAP -->
+		<!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script> -->
+		<!-- JS -->
+		<script src="js/app.js"></script>
+		<script src="js/map.js"></script>
+
+
 	</body>
 </html>
