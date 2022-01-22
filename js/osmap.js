@@ -72,421 +72,351 @@ map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeR
 /* --------------------------- Remise à zéro de la map (= suppresion de l'ensemble des formes dessinées sur la map) --------------------------- */
 
 function clearMap(){
-clearColor();
-clearRectangles();
-clearArrow();
+    clearColor();
+    clearRectangles();
+    clearArrow();
 }
 
 function clearRectangles() {
-if( tabArea ){
-    for (var i = 0; i < tabArea.length; i++) {
-        if( tabArea[i] ) tabArea[i].remove();
+    if( tabArea ){
+        for (var i = 0; i < tabArea.length; i++) {
+            if( tabArea[i] ) tabArea[i].remove();
+        }
     }
-}
 }
 
 function clearArrow(){
-if(arrowTab){
-    for(var i = 0; i < arrowTab.length; i++){
-        if( arrowTab[i] ) arrowTab[i].remove();
+    if(arrowTab){
+        for(var i = 0; i < arrowTab.length; i++){
+            if( arrowTab[i] ) arrowTab[i].remove();
+        }
     }
-}
-arrowTab = [];
+    arrowTab = [];
 }
 
 
 function clearColor() {
-if( tabAreaColor ){
-    for (var i = 0; i < tabAreaColor.length; i++) {
-        if( tabAreaColor[i] ) tabAreaColor[i].remove();
+    if( tabAreaColor ){
+        for (var i = 0; i < tabAreaColor.length; i++) {
+            if( tabAreaColor[i] ) tabAreaColor[i].remove();
+        }
     }
 }
-}
-// J'en suis que là mdr
+
 /* --------------------------- READFILE() --------------------------- */
 
 function readFile( file, _callback ) {
-// Si le fichier est ok
-if (file) {
+    // Si le fichier est ok
+    if (file) {
 
-    // On instancie un FileReader pour récupérer le contenu du fichier
-    var reader = new FileReader();
-    reader.readAsText(file, "UTF-8");
+        // On instancie un FileReader pour récupérer le contenu du fichier
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
 
-    // En cas de succès de lecture du fichier
-    reader.onload = function ( fileRead ) {
+        // En cas de succès de lecture du fichier
+        reader.onload = function ( fileRead ) {
 
-        // On récupère le fichier ligne par ligne dans un tableau
-        var lines = fileRead.target.result.split('\n');
+            // On récupère le fichier ligne par ligne dans un tableau
+            var lines = fileRead.target.result.split('\n');
 
-        // On retourne un tableau conteant les lignes du fichiers
-        _callback( file.name, lines );
+            // On retourne un tableau contenant les lignes du fichier
+            _callback( file.name, lines );
+        }
+
+        // En cas d'echec de lecture du fichier
+        reader.onerror = function ( e ) {
+
+            // MESSAGE ERREUR ?
+            _callback( file.name, null );
+        }
     }
-
-    // En cas d'echec de lecture du fichier
-    reader.onerror = function ( e ) {
-
-        // MESSAGE ERREUR ?
-        _callback( file.name, null );
-    }
-}	
 }
 
 /* --------------------------- TREATMENT --------------------------- */
-
+// Création des zones en fonction des informations données dans le tableau mis en argument
 function areaTraitement( lines, _callback ) {
 
-// Tableau permettant de stocker les zones, permet de les supprimer de la carte si besoin
-tabIdArea = [];
-tabArea = [];
+    // Tableau permettant de stocker les zones, permet de les supprimer de la carte si besoin
+    tabIdArea = [];
+    tabArea = [];
 
-tabLongitudeSW = [];
-tabLatitudeSW = [];
-tabLongitudeNE = [];
-tabLatitudeNE = [];
+    tabLongitudeSW = [];
+    tabLatitudeSW = [];
+    tabLongitudeNE = [];
+    tabLatitudeNE = [];
 
-// On effectue un parcours ligne par ligne
-for ( var i = 0 ; i < lines.length - 1 ; i++ ) {				
-    
-    // On récupère le numéro de la zone
-    idArea = lines[i].substring( 0, lines[i].indexOf( "|" ) );
-    tabIdArea[i] = idArea;
-    
-    var locations = lines[i].split('|');
-    
-    // --- Sud West ( SW ) ---
-    // locations[1] est le Sud West ( SW )
-    var coordonnees = locations[1].split(',');
-    
-    // Coordonnées du Sud West ( SW )
-    longitudeSW = coordonnees[0];
-    latitudeSW = coordonnees[1];
+    // On effectue un parcours ligne par ligne
+    for ( var i = 0 ; i < lines.length - 1 ; i++ ) {				
+        
+        // On récupère le numéro de la zone
+        idArea = lines[i].substring( 0, lines[i].indexOf( "|" ) );
+        tabIdArea[i] = idArea;
+        
+        var locations = lines[i].split('|');
+        
+        // --- South West ( SW ) ---
+        // locations[1] est le South West ( SW )
+        var coordonnees = locations[1].split(',');
+        
+        // Coordonnées du South West ( SW )
+        longitudeSW = coordonnees[0];
+        latitudeSW = coordonnees[1];
 
-    // Ajout des coordonnées du SW dans les taleaux des coordonnées
-    tabLongitudeSW[i] = longitudeSW;
-    tabLatitudeSW[i] = latitudeSW;
-    
-    // --- North East ( NE ) ---
-    // locations[4] est le North East ( NE )
-    var coordonnees = locations[4].split(',');
-    
-    // Coordonnées du North East ( NE )
-    longitudeNE = coordonnees[0];
-    latitudeNE = coordonnees[1];
+        // Ajout des coordonnées du SW dans les tableaux des coordonnées
+        tabLongitudeSW[i] = longitudeSW;
+        tabLatitudeSW[i] = latitudeSW;
+        
+        // --- North East ( NE ) ---
+        // locations[4] est le North East ( NE )
+        var coordonnees = locations[4].split(',');
+        
+        // Coordonnées du North East ( NE )
+        longitudeNE = coordonnees[0];
+        latitudeNE = coordonnees[1];
 
-    // Ajout des coordonnées du NW dans les taleaux des coordonnées
-    tabLongitudeNE[i] = longitudeNE;
-    tabLatitudeNE[i] = latitudeNE;
-    
-    // On créer notre zone
-    area = new google.maps.Rectangle({
-        strokeColor : '#3d3d29',
-        strokeOpacity : 1,
-        strokeWeight : 0.4,
-        fillColor : '#3d3d29',
-        clickable : true,//
-        fillOpacity : 0.0,
-        map : map,
-        bounds : {
-            north : parseFloat(latitudeNE),
-            south : parseFloat(latitudeSW),
-            west : parseFloat(longitudeSW),
-            east : parseFloat(longitudeNE)
-        }
-    });
+        // Ajout des coordonnées du NW dans les tableaux des coordonnées
+        tabLongitudeNE[i] = longitudeNE;
+        tabLatitudeNE[i] = latitudeNE;
+        
+        // On crée notre zone
+        var bounds = [ [latitudeNE, longitudeNE], [latitudeSW, longitudeSW] ];
+        var area = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(map);
+        map.fitBounds(bounds);
+        
+        createClickablePoly(area, "Id : "
+                    + numberRec + '<br>'  
+                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
+                    + '<br>' 
+                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
+                    map);
+        // On ajoute la zone dans le tableau contenant toutes les zones
+        tabArea[i] = area;
+    }
 
-    area.setMap(map);
-    infoWindow = new google.maps.InfoWindow();
-    createClickablePoly(area, "Id : "
-                + numberRec + '<br>'  
-                + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
-                + '<br>' 
-                + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
-                map);
-    // On ajoute la zone dans le tableau contenant toutes les zones
-    tabArea[i] = area;
+    _callback();
 }
 
-_callback();
-}
-
+// Même fonction mais avec personnalisation des couleurs des zones
 function areaColorTraitement( lines, cb ) {
 
-// Tableau permettant de stocker les zones coloré, permet de les supprimer de la carte si besoin
-tabAreaColor = [];
+    // Tableau permettant de stocker les zones colorées, permet de les supprimer de la carte si besoin
+    tabAreaColor = [];
 
-// On effectue un parcours ligne par ligne
-
-for ( var i = 0 ; i < lines.length  ; i++ ) {
-    
-    // On récupère le numéro de la zone
-    idColorArea = lines[i].substring( 0, lines[i].indexOf( " " ) );
-
-    // On recupère le type de la zone
-    typeArea = lines[i].substring( lines[i].lastIndexOf( " " ) + 1 );
-
-    // Si la zone est bien présente sur la carte
-    if ( idColorArea == tabIdArea[i] ) {
+    // On effectue un parcours ligne par ligne
+    for ( var i = 0 ; i < lines.length  ; i++ ) {
         
-        // On parcours la map des couleurs à affecter en fonction du type de la zone
-        for ( var indexMapAreaColor = 0 ; indexMapAreaColor < mapAreaColor.length ; indexMapAreaColor++ ) {
+        // On récupère le numéro de la zone
+        idColorArea = lines[i].substring( 0, lines[i].indexOf( " " ) );
+
+        // On recupère le type de la zone
+        typeArea = lines[i].substring( lines[i].lastIndexOf( " " ) + 1 );
+
+        // Si la zone est bien présente sur la carte
+        if ( idColorArea == tabIdArea[i] ) {
             
-            // Affecte la bonne couleur en fonction de son nom, et applique la couleur par défaut si besoin
-            if ( ( typeArea == mapAreaColor[ indexMapAreaColor ].name ) || ( indexMapAreaColor == mapAreaColor.length - 1 ) ) {
+            // On parcourt la map des couleurs à affecter en fonction du type de la zone
+            for ( var indexMapAreaColor = 0 ; indexMapAreaColor < mapAreaColor.length ; indexMapAreaColor++ ) {
                 
-                // On crée la zone coloré en fonction de la couleur donné par la map des couleurs à affecter en fonction du type de la zone
-                areaColor = new google.maps.Rectangle({
-                    strokeColor : mapAreaColor[ indexMapAreaColor ].color,
-                    strokeOpacity : 0,
-                    strokeWeight : 0,
-                    fillColor : mapAreaColor[ indexMapAreaColor ].color,
-                    clickable : true,
-                    fillOpacity : 0.8,
-                    map : map,
-                    bounds : {
-                        north : parseFloat(tabLatitudeNE[i]),
-                        south : parseFloat(tabLatitudeSW[i]),
-                        west : parseFloat(tabLongitudeSW[i]),
-                        east : parseFloat(tabLongitudeNE[i])
-                    }
-                });
+                // Affecte la bonne couleur en fonction de son nom, et applique la couleur par défaut si besoin
+                if ( ( typeArea == mapAreaColor[ indexMapAreaColor ].name ) || ( indexMapAreaColor == mapAreaColor.length - 1 ) ) {
+                    
+                    // On crée la zone colorée en fonction de la couleur donnée par la map des couleurs à affecter en fonction du type de la zone
+                    var bounds = [ [parseFloat(tabLatitudeNE[i]), parseFloat(tabLongitudeNE[i])], [parseFloat(tabLatitudeSW[i]), parseFloat(tabLongitudeSW[i])] ];
+                    var areaColor = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.8}).addTop(map);
+                    map.fitBounds(bounds);
+                    
+                    // On ajoute la zone colorée dans le tableau contenant toutes les zones colorées
+                    tabAreaColor[i] = areaColor;
 
-                // On affecte la zone coloré à la carte
-                areaColor.setMap(map);
+                    // On rend la zone colorée cliquable, quand celle-ci est cliquée des informations telles que son id, son type, et ses coordonnées spatiales sont affichées
+                    createAreaClickableInfo(areaColor, "Id : "
+                                    + idColorArea + '<br>' + "Type: "
+                                        + mapAreaColor[ indexMapAreaColor ].name + '<br>' 
+                                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
+                                    + '<br>' 
+                                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
+                                        map);	
 
-                // On ajoute la zone coloré dans le tableau contenant toutes les zones colorés
-                tabAreaColor[i] = areaColor;
-
-                // On rend la zone coloré cliquable, quand celle-ci est cliqué des informations tel que son id, son type, et ses coordonées spatiales 
-                createAreaClickableInfo(areaColor, "Id : "
-                                  + idColorArea + '<br>' + "Type: "
-                                    + mapAreaColor[ indexMapAreaColor ].name + '<br>' 
-                                  + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
-                                  + '<br>' 
-                                  + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
-                                    map);	
-
-                // On a trouvé la couleur correspondant au type de cette zone, on peut passer à la zone suivante
-                break;
-            } 
+                    // On a trouvé la couleur correspondant au type de cette zone, on peut passer à la zone suivante
+                    break;
+                } 
+            }
         }
     }
-}
 
-cb();
+    cb();
 }
 
 function areaTraitementSeq(lines, _callback) {		
 
-tabLongitudeRecSW = [];
-tabLatitudeRecSW = [];
-tabLongitudeRecNE = [];
-tabLatitudeRecNE = [];
-tabLongitudeRecSE = [];
-tabLatitudeRecSE = [];
-tabLongitudeRecNW = [];
-tabLatitudeRecNW = [];		
+    tabLongitudeRecSW = [];
+    tabLatitudeRecSW = [];
+    tabLongitudeRecNE = [];
+    tabLatitudeRecNE = [];
+    tabLongitudeRecSE = [];
+    tabLatitudeRecSE = [];
+    tabLongitudeRecNW = [];
+    tabLatitudeRecNW = [];		
 
-tabNumberRec = [];
+    tabNumberRec = [];
 
-tabArea = [];
+    tabArea = [];
 
-for (var i = 0; i < lines.length-1; i++) {				
-    //une ligne exemple :		//59|5.364476421678647,43.28555797340999|5.36521683023673,43.285018986705|5.364476415118365,43.285018986705|5.365216843357294,43.28555797340999|
-    
-    //document.write(lines[i]);
-    
-    numberRec = lines[i].substring(0, lines[i].indexOf("|", 0));
-    tabNumberRec[i] = numberRec;
-    
-    var points = lines[i].split('|');
-    
-    //document.write("id= "+points[0]+"<br>");
-    
-    //point[1] est le SW
-    var coordonnees = points[1].split(",");
-    longitudeRecSW = coordonnees[0];
-    latitudeRecSW = coordonnees[1];
-    //document.write(longitudeRecSW+" , "+latitudeRecSW+"<br>");
-    tabLongitudeRecSW[i] = longitudeRecSW;
-    tabLatitudeRecSW[i] = latitudeRecSW;
-    
-    //point[2] est le SE
-    var coordonnees = points[2].split(",");
-    longitudeRecSE = coordonnees[0];
-    latitudeRecSE = coordonnees[1];
-    //document.write(longitudeRecSW+" , "+latitudeRecSW+"<br>");
-    tabLongitudeRecSE[i] = longitudeRecSE;
-    tabLatitudeRecSE[i] = latitudeRecSE;
-    
-    //point[3] est le NW
-    var coordonnees = points[3].split(",");
-    longitudeRecNW = coordonnees[0];
-    latitudeRecNW = coordonnees[1];
-    //document.write(longitudeRecSW+" , "+latitudeRecSW+"<br>");
-    tabLongitudeRecNW[i] = longitudeRecNW;
-    tabLatitudeRecNW[i] = latitudeRecNW;
-    
-    //point[4] est le NE
-    coordonnees = points[4].split(",");
-    longitudeRecNE = coordonnees[0];
-    latitudeRecNE = coordonnees[1];
-    //document.write(longitudeRecNE+" , "+latitudeRecNE+"<br>");
-    tabLongitudeRecNE[i] = longitudeRecNE;
-    tabLatitudeRecNE[i] = latitudeRecNE;
-    
-    rectangle = new google.maps.Rectangle({
-        strokeColor : '#3d3d29',
-        strokeOpacity : 1,
-        strokeWeight : 0.4,
-        fillColor : '#3d3d29',
-        //clickable : true,//
-        fillOpacity : 0.0,
-        map : map,
-        bounds : {
-            north : parseFloat(latitudeRecNE),
-            south : parseFloat(latitudeRecSW),
-            west : parseFloat(longitudeRecSW),
-            east : parseFloat(longitudeRecNE)
-        }
-    });
+    for (var i = 0; i < lines.length-1; i++) {				
+        //une ligne exemple :		//59|5.364476421678647,43.28555797340999|5.36521683023673,43.285018986705|5.364476415118365,43.285018986705|5.365216843357294,43.28555797340999|
+        
+        numberRec = lines[i].substring(0, lines[i].indexOf("|", 0));
+        tabNumberRec[i] = numberRec;
+        
+        var points = lines[i].split('|');
+        
+        //point[1] est le SW
+        var coordonnees = points[1].split(",");
+        longitudeRecSW = coordonnees[0];
+        latitudeRecSW = coordonnees[1];
 
-    tabArea[i] = rectangle;
+        tabLongitudeRecSW[i] = longitudeRecSW;
+        tabLatitudeRecSW[i] = latitudeRecSW;
+        
+        //point[2] est le SE
+        var coordonnees = points[2].split(",");
+        longitudeRecSE = coordonnees[0];
+        latitudeRecSE = coordonnees[1];
 
-}
-_callback();		
+        tabLongitudeRecSE[i] = longitudeRecSE;
+        tabLatitudeRecSE[i] = latitudeRecSE;
+        
+        //point[3] est le NW
+        var coordonnees = points[3].split(",");
+        longitudeRecNW = coordonnees[0];
+        latitudeRecNW = coordonnees[1];
+
+        tabLongitudeRecNW[i] = longitudeRecNW;
+        tabLatitudeRecNW[i] = latitudeRecNW;
+        
+        //point[4] est le NE
+        coordonnees = points[4].split(",");
+        longitudeRecNE = coordonnees[0];
+        latitudeRecNE = coordonnees[1];
+
+        tabLongitudeRecNE[i] = longitudeRecNE;
+        tabLatitudeRecNE[i] = latitudeRecNE;
+        
+        var bounds = [ [latitudeRecNE, longitudeRecNE], [latitudeRecSW, longitudeRecSW] ];
+        var rectangle = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(map);
+        map.fitBounds(bounds);
+
+        tabArea[i] = rectangle;
+
+    }
+    _callback();	
 }
 
 function areaColorTraitementSeq(lines, cb ){
 
-tabAreaColor = [];
+    tabAreaColor = [];    
 
-var lineSymbol = {
-    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-};
+    for (var i = 0; i < lines.length-1; i++) {
+    //exemple de ligne
+    //201977 W:LATENT,DECREASING,EMERGING SW:DECREASING NW:DECREASING NE:EMERGING NONE:DECREASING
 
-var lineSymbolB = {
-    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW
-};
+        var champs = lines[i].split(' ');
+        numberRecColor = champs[0];
 
-for (var i = 0; i < lines.length-1; i++) {
-//exemple de ligne
-//201977 W:LATENT,DECREASING,EMERGING SW:DECREASING NW:DECREASING NE:EMERGING NONE:DECREASING
+        for (var j = 1; j < champs.length; j++) {
 
-    var champs = lines[i].split(' ');
-    numberRecColor = champs[0];
+            var dirtype = champs[j].split(':');
+            var direction = dirtype[0];
+            var descriptionColor = dirtype[1];
 
-    for (var j = 1; j < champs.length; j++) {
-
-        var dirtype = champs[j].split(':');
-        var direction = dirtype[0];
-        var descriptionColor = dirtype[1];
-
-        var couleur;
-    
-        var index = mapAreaColor.findIndex(function(element) {
-            return element.name == descriptionColor;
-        });
-
-        if(index != -1){
-            couleur = mapAreaColor[index].color;
-        }else{
-            couleur = mapAreaColor[mapAreaColor.length-1].color;
-        }
+            var couleur;
         
-        //selon la direction faire fleche (a partir du centre de la cellule concernee)
-        // avec la couleur du type
+            var index = mapAreaColor.findIndex(function(element) {
+                return element.name == descriptionColor;
+            });
 
-        var centrelat = (parseFloat(tabLatitudeRecSW[i]) + parseFloat(tabLatitudeRecNE[i]) + parseFloat(tabLatitudeRecNW[i]) + parseFloat(tabLatitudeRecSE[i])) / 4;
-        var centrelong = (parseFloat(tabLongitudeRecSW[i]) + parseFloat(tabLongitudeRecNE[i]) + parseFloat(tabLongitudeRecNW[i]) + parseFloat(tabLongitudeRecSE[i])) / 4;
-        
-        //direction : N S E W NE NW SW SE NONE
-        if(direction == "N") {
-            var nordlat = parseFloat(tabLatitudeRecNE[i]);
-            var nordlong = (parseFloat(tabLongitudeRecNE[i]) + parseFloat(tabLongitudeRecNW[i])) / 2;
-
-            drawLine(centrelat, centrelong, nordlat, nordlong, lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+            if(index != -1){
+                couleur = mapAreaColor[index].color;
+            }else{
+                couleur = mapAreaColor[mapAreaColor.length-1].color;
+            }
             
-        } else if(direction == "S") {
-            var sudlat = parseFloat(tabLatitudeRecSE[i]);
-            var sudlong = (parseFloat(tabLongitudeRecSE[i]) + parseFloat(tabLongitudeRecSW[i])) / 2;
+            // Selon la direction faire fleche (a partir du centre de la cellule concernee)
+            // avec la couleur du type
 
-            drawLine(centrelat, centrelong, sudlat, sudlong, lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
-
-        } else if(direction == "E") {
-            var estlat = (parseFloat(tabLatitudeRecNE[i]) + parseFloat(tabLatitudeRecSE[i])) / 2;
-            var estlong = parseFloat(tabLongitudeRecNE[i]);
-
-            drawLine(centrelat, centrelong, estlat, estlong, lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
-
-        } else if(direction == "NE") {
+            var centrelat = (parseFloat(tabLatitudeRecSW[i]) + parseFloat(tabLatitudeRecNE[i]) + parseFloat(tabLatitudeRecNW[i]) + parseFloat(tabLatitudeRecSE[i])) / 4;
+            var centrelong = (parseFloat(tabLongitudeRecSW[i]) + parseFloat(tabLongitudeRecNE[i]) + parseFloat(tabLongitudeRecNW[i]) + parseFloat(tabLongitudeRecSE[i])) / 4;
             
-            drawLine(centrelat, centrelong, tabLatitudeRecNE[i], tabLongitudeRecNE[i], lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+            //direction : N S E W NE NW SW SE NONE
+            if(direction == "N") {
+                var nordlat = parseFloat(tabLatitudeRecNE[i]);
+                var nordlong = (parseFloat(tabLongitudeRecNE[i]) + parseFloat(tabLongitudeRecNW[i])) / 2;
 
-        } else if(direction == "NW") {
-
-            drawLine(centrelat, centrelong, tabLatitudeRecNW[i], tabLongitudeRecNW[i], lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
-        } else if(direction == "SW") {
-            
-            drawLine(centrelat, centrelong, tabLatitudeRecSW[i], tabLongitudeRecSW[i], lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
-
-        } else if(direction == "SE") {
-
-            drawLine(centrelat, centrelong, tabLatitudeRecSE[i], tabLongitudeRecSE[i], lineSymbol, couleur, 
-                map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
-
-        } else { // on fait un rectangle
-            
-            // On parcours la map des couleurs à affecter en fonction du type de la zone
-            for ( var indexMapAreaColor = 0 ; indexMapAreaColor < mapAreaColor.length ; indexMapAreaColor++ ) {
-            
-                // Affecte la bonne couleur en fonction de son nom, et applique la couleur par défaut si besoin
-                if ( ( descriptionColor == mapAreaColor[ indexMapAreaColor ].name ) || ( indexMapAreaColor == mapAreaColor.length - 1 ) ) {
+                drawLine(centrelat, centrelong, nordlat, nordlong, couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
                 
-                    rectangle1 = new google.maps.Rectangle({
-                        strokeColor : mapAreaColor[ indexMapAreaColor ].color,
-                        strokeOpacity : 0,
-                        strokeWeight : 0,
-                        fillColor : mapAreaColor[ indexMapAreaColor ].color,
-                        clickable : true,
-                        fillOpacity : 0.5,
-                        map : map,
-                        bounds : {
-                            north : parseFloat(tabLatitudeRecNE[i]),
-                            south : parseFloat(tabLatitudeRecSW[i]),
-                            west : parseFloat(tabLongitudeRecSW[i]),
-                            east : parseFloat(tabLongitudeRecNE[i])
+            } else if(direction == "S") {
+                var sudlat = parseFloat(tabLatitudeRecSE[i]);
+                var sudlong = (parseFloat(tabLongitudeRecSE[i]) + parseFloat(tabLongitudeRecSW[i])) / 2;
+
+                drawLine(centrelat, centrelong, sudlat, sudlong, couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+
+            } else if(direction == "E") {
+                var estlat = (parseFloat(tabLatitudeRecNE[i]) + parseFloat(tabLatitudeRecSE[i])) / 2;
+                var estlong = parseFloat(tabLongitudeRecNE[i]);
+
+                drawLine(centrelat, centrelong, estlat, estlong, couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+
+            } else if(direction == "NE") {
+                
+                drawLine(centrelat, centrelong, tabLatitudeRecNE[i], tabLongitudeRecNE[i], couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+
+            } else if(direction == "NW") {
+
+                drawLine(centrelat, centrelong, tabLatitudeRecNW[i], tabLongitudeRecNW[i], couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+            } else if(direction == "SW") {
+                
+                drawLine(centrelat, centrelong, tabLatitudeRecSW[i], tabLongitudeRecSW[i], couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+
+            } else if(direction == "SE") {
+
+                drawLine(centrelat, centrelong, tabLatitudeRecSE[i], tabLongitudeRecSE[i], couleur, 
+                    map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE);
+
+            } else { // on fait un rectangle
+                
+                // On parcourt la map des couleurs à affecter en fonction du type de la zone
+                for ( var indexMapAreaColor = 0 ; indexMapAreaColor < mapAreaColor.length ; indexMapAreaColor++ ) {
+                
+                    // Affecte la bonne couleur en fonction de son nom, et applique la couleur par défaut si besoin
+                    if ( ( descriptionColor == mapAreaColor[ indexMapAreaColor ].name ) || ( indexMapAreaColor == mapAreaColor.length - 1 ) ) {
+                    
+                        var bounds = [ [parseFloat(tabLatitudeRecNE[i]), parseFloat(tabLongitudeRecNE[i])], [parseFloat(tabLatitudeRecSW[i]), parseFloat(tabLongitudeRecSW[i])] ];
+                        var rectangle1 = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.5}).addTop(map);
+                        map.fitBounds(bounds);                        
+                        
+                        tabAreaColor[i] = rectangle1;
+
+                        if(champs.length == 2) {
+                            createAreaClickableInfo(rectangle1, "Id: "
+                                    + numberRecColor + '<br>' + "Type: "
+                                    + descriptionColor + '<br>' 
+                                    + "SW: " + tabLatitudeRecSW[i] + "," + tabLongitudeRecSW[i]
+                                    + '<br>' 
+                                    + "NE: " + tabLatitudeRecNE[i] + "," + tabLongitudeRecNE[i],
+                                    map);
                         }
 
-                    });
-            
-                    rectangle1.setMap(map);
-                    
-                    tabAreaColor[i] = rectangle1;
-
-                    if(champs.length == 2) {
-                        infoWindow = new google.maps.InfoWindow();
-                        createAreaClickableInfo(rectangle1, "Id: "
-                                + numberRecColor + '<br>' + "Type: "
-                                + descriptionColor + '<br>' 
-                                + "SW: " + tabLatitudeRecSW[i] + "," + tabLongitudeRecSW[i]
-                                + '<br>' 
-                                + "NE: " + tabLatitudeRecNE[i] + "," + tabLongitudeRecNE[i],
-                                map);
+                        break;
                     }
-
-                    break;
                 }
             }
         }
     }
+    cb();
 }
-cb();
-}
-
