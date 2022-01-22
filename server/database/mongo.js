@@ -1,7 +1,7 @@
 //---------- Mongo Init ----------
 
 var mongoose = require('mongoose');
-var uuidv4 = require('uuid/v4');
+var uuidv4 = require('uuidv4');
 
 // ---------- Connection ----------
 
