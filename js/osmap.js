@@ -68,8 +68,8 @@ map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeR
             + "NE: " + tabLatitudeRecNE + "," + tabLongitudeRecNE,
             map);
 }
-// J'en suis que là mdr
-/* --------------------------- CLEARMAP() --------------------------- */
+
+/* --------------------------- Remise à zéro de la map (= suppresion de l'ensemble des formes dessinées sur la map) --------------------------- */
 
 function clearMap(){
 clearColor();
@@ -80,7 +80,7 @@ clearArrow();
 function clearRectangles() {
 if( tabArea ){
     for (var i = 0; i < tabArea.length; i++) {
-        if( tabArea[i] ) tabArea[i].setMap(null);
+        if( tabArea[i] ) tabArea[i].remove();
     }
 }
 }
@@ -88,7 +88,7 @@ if( tabArea ){
 function clearArrow(){
 if(arrowTab){
     for(var i = 0; i < arrowTab.length; i++){
-        if( arrowTab[i] ) arrowTab[i].setMap(null);
+        if( arrowTab[i] ) arrowTab[i].remove();
     }
 }
 arrowTab = [];
@@ -98,11 +98,11 @@ arrowTab = [];
 function clearColor() {
 if( tabAreaColor ){
     for (var i = 0; i < tabAreaColor.length; i++) {
-        if( tabAreaColor[i] ) tabAreaColor[i].setMap(null);
+        if( tabAreaColor[i] ) tabAreaColor[i].remove();
     }
 }
 }
-
+// J'en suis que là mdr
 /* --------------------------- READFILE() --------------------------- */
 
 function readFile( file, _callback ) {
