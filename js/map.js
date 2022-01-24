@@ -52,15 +52,15 @@ function initMap( longitudeInit, latitudeInit ) {
 
 // Une zone = Un carré de couleur
 // Rend une zone cliquable => Quand on clique sur la zone, des informations telles que son id, son type, et ses coordonnées spatiales s'affichent
-function createAreaClickableInfo( elementToListen, content, map ) {
-    var contentString = content;
-    elementToListen.bindPopup(contentString);
-}
+// function createAreaClickableInfo( elementToListen, content, map ) {
+//     var contentString = content;
+//     elementToListen.bindPopup(contentString);
+// }
 
-function createClickablePoly(poly, html, map) {
-    var contentString = html;
-    poly.bindPopup(contentString);
-}
+// function createClickablePoly(poly, html, map) {
+//     var contentString = html;
+//     poly.bindPopup(contentString);
+// }
 
 function drawLine(centrelat, centrelong, calculatedLat, calculatedLong, couleur, 
 map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeRecNE){
@@ -81,14 +81,21 @@ map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeR
     map.fitBounds(polyline.getBounds());
 
     arrowTab.push(fleche);
-    createAreaClickableInfo(fleche, 
-            "Direction: " + direction + '<br>'
-            + "Type: " + descriptionColor + '<br>'
-            + "Cell id: " + numberRecColor + '<br>'
-            + "SW: " + tabLatitudeRecSW + "," + tabLongitudeRecSW
-            + '<br>' 
-            + "NE: " + tabLatitudeRecNE + "," + tabLongitudeRecNE,
-            map);
+
+    fleche.bindPopup("Direction: " + direction + '<br>'
+                    + "Type: " + descriptionColor + '<br>'
+                    + "Cell id: " + numberRecColor + '<br>'
+                    + "SW: " + tabLatitudeRecSW + "," + tabLongitudeRecSW + '<br>' 
+                    + "NE: " + tabLatitudeRecNE + "," + tabLongitudeRecNE);
+
+    // createAreaClickableInfo(fleche, 
+    //         "Direction: " + direction + '<br>'
+    //         + "Type: " + descriptionColor + '<br>'
+    //         + "Cell id: " + numberRecColor + '<br>'
+    //         + "SW: " + tabLatitudeRecSW + "," + tabLongitudeRecSW
+    //         + '<br>' 
+    //         + "NE: " + tabLatitudeRecNE + "," + tabLongitudeRecNE,
+    //         map);
 }
 
 /* --------------------------- Remise à zéro de la map (= suppresion de l'ensemble des formes dessinées sur la map) --------------------------- */
@@ -167,8 +174,11 @@ function areaTraitement( lines, _callback ) {
     tabLongitudeNE = [];
     tabLatitudeNE = [];
 
+    // console.log(lines.length);
+
     // On effectue un parcours ligne par ligne
-    for ( var i = 0 ; i < lines.length - 1 ; i++ ) {				
+    for ( var i = 0 ; i < lines.length - 1 ; i++ ) {
+        // console.log("areaTraitement : " + i);
         
         // On récupère le numéro de la zone
         idArea = lines[i].substring( 0, lines[i].indexOf( "|" ) );
@@ -203,14 +213,18 @@ function areaTraitement( lines, _callback ) {
         // On crée notre zone
         var bounds = [ [latitudeNE, longitudeNE], [latitudeSW, longitudeSW] ];
         var area = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(map);
-        map.fitBounds(bounds);
+        // map.fitBounds(bounds);
         
-        createClickablePoly(area, "Id : "
-                    + numberRec + '<br>'  
-                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
-                    + '<br>' 
-                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
-                    map);
+        area.bindPopup("Id : " + numberRec + '<br>'  
+                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i] + '<br>' 
+                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i]);
+
+        // createClickablePoly(area, "Id : "
+        //             + numberRec + '<br>'  
+        //             + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
+        //             + '<br>' 
+        //             + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
+        //             map);
         // On ajoute la zone dans le tableau contenant toutes les zones
         tabArea[i] = area;
     }
@@ -226,6 +240,7 @@ function areaColorTraitement( lines, cb ) {
 
     // On effectue un parcours ligne par ligne
     for ( var i = 0 ; i < lines.length  ; i++ ) {
+        // console.log("areaColorTraitement : " + i);
         
         // On récupère le numéro de la zone
         idColorArea = lines[i].substring( 0, lines[i].indexOf( " " ) );
@@ -244,20 +259,25 @@ function areaColorTraitement( lines, cb ) {
                     
                     // On crée la zone colorée en fonction de la couleur donnée par la map des couleurs à affecter en fonction du type de la zone
                     var bounds = [ [parseFloat(tabLatitudeNE[i]), parseFloat(tabLongitudeNE[i])], [parseFloat(tabLatitudeSW[i]), parseFloat(tabLongitudeSW[i])] ];
-                    var areaColor = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.8}).addTop(map);
-                    map.fitBounds(bounds);
+                    var areaColor = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.8}).addTo(map);
+                    // map.fitBounds(bounds);
                     
                     // On ajoute la zone colorée dans le tableau contenant toutes les zones colorées
                     tabAreaColor[i] = areaColor;
 
                     // On rend la zone colorée cliquable, quand celle-ci est cliquée des informations telles que son id, son type, et ses coordonnées spatiales sont affichées
-                    createAreaClickableInfo(areaColor, "Id : "
-                                    + idColorArea + '<br>' + "Type: "
-                                        + mapAreaColor[ indexMapAreaColor ].name + '<br>' 
-                                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
-                                    + '<br>' 
-                                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
-                                        map);	
+                    areaColor.bindPopup("Id : " + idColorArea + '<br>'
+                                    + "Type: " + mapAreaColor[ indexMapAreaColor ].name + '<br>' 
+                                    + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i] + '<br>' 
+                                    + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i]);
+                    
+                    // createAreaClickableInfo(areaColor, "Id : "
+                    //                 + idColorArea + '<br>' + "Type: "
+                    //                     + mapAreaColor[ indexMapAreaColor ].name + '<br>' 
+                    //                 + "SW: " + tabLatitudeSW[i] + "," + tabLongitudeSW[i]
+                    //                 + '<br>' 
+                    //                 + "NE: " + tabLatitudeNE[i] + "," + tabLongitudeNE[i],
+                    //                     map);	
 
                     // On a trouvé la couleur correspondant au type de cette zone, on peut passer à la zone suivante
                     break;
@@ -425,13 +445,19 @@ function areaColorTraitementSeq(lines, cb ){
                         tabAreaColor[i] = rectangle1;
 
                         if(champs.length == 2) {
-                            createAreaClickableInfo(rectangle1, "Id: "
-                                    + numberRecColor + '<br>' + "Type: "
-                                    + descriptionColor + '<br>' 
-                                    + "SW: " + tabLatitudeRecSW[i] + "," + tabLongitudeRecSW[i]
-                                    + '<br>' 
-                                    + "NE: " + tabLatitudeRecNE[i] + "," + tabLongitudeRecNE[i],
-                                    map);
+
+                            rectangle1.bindPopup("Id: " + numberRecColor + '<br>'
+                            + "Type: " + descriptionColor + '<br>' 
+                            + "SW: " + tabLatitudeRecSW[i] + "," + tabLongitudeRecSW[i] + '<br>' 
+                            + "NE: " + tabLatitudeRecNE[i] + "," + tabLongitudeRecNE[i]);
+
+                            // createAreaClickableInfo(rectangle1, "Id: "
+                            //         + numberRecColor + '<br>' + "Type: "
+                            //         + descriptionColor + '<br>' 
+                            //         + "SW: " + tabLatitudeRecSW[i] + "," + tabLongitudeRecSW[i]
+                            //         + '<br>' 
+                            //         + "NE: " + tabLatitudeRecNE[i] + "," + tabLongitudeRecNE[i],
+                            //         map);
                         }
 
                         break;
