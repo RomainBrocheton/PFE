@@ -1,5 +1,5 @@
 var database = require('./mongo');
-var uuidv4 = require('uuid/v4');
+var uuidv4 = require('uuidv4');
 
 // ---------- Gridfs connexion ----------
 
