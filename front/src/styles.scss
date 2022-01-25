@@ -115,7 +115,7 @@ form{
         }
     }
 
-    .input-checkbox{
+    .input-checkbox, .input-radio{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -137,6 +137,21 @@ form{
         label{
             width: 80%;
             opacity: 0.5;
+        }
+    }
+
+    .input-radio{
+        label{
+            width: 100%;
+            opacity: 0.5;
+        }
+
+        input{
+            display: none;
+
+            &:checked ~ label{
+                opacity: 1;
+            }
         }
     }
 

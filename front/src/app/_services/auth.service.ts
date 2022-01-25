@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 import { API_URL } from './api.service';
 
 const LS_KEY = 'logged';
+const TTL_KEY = 'expiry';
 
 @Injectable({
   providedIn: 'root'

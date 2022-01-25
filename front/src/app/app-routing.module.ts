@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { InsertAutoComponent } from './insert-auto/insert-auto.component';
@@ -20,8 +19,7 @@ const routes: Routes = [
       { path: 'insert/automatique', component: InsertAutoComponent },
       { path: 'insert/manuelle', component: InsertManuComponent },
       { path: 'connexion', component: ConnexionComponent },
-      { path: 'inscription', component: InscriptionComponent },
-      { path: 'deconnexion', component: DeconnexionComponent }
+      { path: 'inscription', component: InscriptionComponent }
     ]  
   }
 ];

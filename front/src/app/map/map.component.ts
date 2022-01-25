@@ -2,10 +2,10 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { SharingService } from '../_services/sharing.service';
 
-const ZOOM_INIT = 7;
+const ZOOM_INIT = 3;
 const ZOOM_IN = 12;
 const ZOOM_MAX = 18;
-const ZOOM_MIN = 5;
+const ZOOM_MIN = 3;
 
 @Component({
   selector: 'app-map',

@@ -12,7 +12,6 @@ import { InsertManuComponent } from './insert-manu/insert-manu.component';
 import { InsertAutoComponent } from './insert-auto/insert-auto.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { InscriptionComponent } from './inscription/inscription.component';
-import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -27,8 +26,7 @@ import { FormsModule } from '@angular/forms';
     InsertManuComponent,
     InsertAutoComponent,
     ConnexionComponent,
-    InscriptionComponent,
-    DeconnexionComponent
+    InscriptionComponent
   ],
   imports: [
     BrowserModule,
