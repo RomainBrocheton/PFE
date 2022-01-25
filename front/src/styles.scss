@@ -75,6 +75,16 @@ form{
     align-content: center;
     align-items: center;
 
+    .form-group{
+        width: 100%;
+        border: solid; border-width: 0; border-bottom-width: 1px;
+        border-color: $primaryVariant;
+
+        * {
+            border-bottom-width: 0px !important;
+        }
+    }
+
     input, .input-file label{
         background: $background;
         color: $textLight;
@@ -115,7 +125,7 @@ form{
         }
     }
 
-    .input-checkbox, .input-radio{
+    .input-checkbox, .input-radio, .label{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -140,23 +150,35 @@ form{
         }
     }
 
-    .input-radio{
-        label{
-            width: 100%;
-            opacity: 0.5;
-        }
-
-        input{
-            display: none;
-
-            &:checked ~ label{
-                opacity: 1;
-            }
-        }
+    .label{
+        opacity: 1;
+        font-weight: bold;
+        border-bottom-width: 0px;
     }
 
     .noborder{
         border-bottom-width: 0;
+    }
+
+    .input-select{
+        width: 100%;
+        background: $background;
+        color: $textLight;
+
+        opacity: 0.5;
+
+        select{
+            width: 100%;
+            padding: $margin 1.5 * $margin;
+            color: white;
+            border: none;
+            background: transparent;
+
+            option{
+                background: $background;
+                color: $textLight;
+            }
+        }
     }
 
     button{

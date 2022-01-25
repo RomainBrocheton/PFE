@@ -20,11 +20,13 @@ export class ConnexionComponent implements OnInit {
 
   connexion(f : NgForm){
     this.auth.login(f.value).subscribe(res => {
+      console.log(res);
+
       if(res.error){
         alert(res.error)
       }
       else{
-        this.auth.setUser(1);
+        this.auth.setUser(res.token);
         location.reload();
       }
     });

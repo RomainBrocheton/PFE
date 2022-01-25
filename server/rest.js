@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var miscellaneous = require('./treatment/miscellaneous');
+var database = require('./database/mongo');
+
 
 //---------- Serveur Start ----------
 
@@ -112,6 +114,17 @@ app.post('/getCityAvailable', function( requete , response ) {
         }
     } );
     
+});
+
+app.post('/getCities', function( requete , response ) {
+    database.getDataModel().find({}, function(err, res){
+        response.send( 
+            {
+                success : true,
+                cities : res
+            }
+        );
+    });
 });
 
 app.post('/getPeriodAvailable', function( requete , response ) {
