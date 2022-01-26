@@ -92,11 +92,22 @@ export class VisuAutoComponent implements OnInit {
     this.sharedService.nextMessage({lat: this.lat, lon: this.lon});
   }
 
+  timeoutCrash(){
+    alert('Impossible de récupérer les informations depuis notre API 😥');
+    console.error('Notre API n a pas répondu à temps.')
+  }
+
   async getRaws(){
+    let x = setTimeout(() => {
+      this.timeoutCrash();
+    }, 10000);
+
     return new Promise((resolve, reject) => {
       this.api.post('getCities', {
         token: this.auth.getUser()
       }).subscribe(res => {
+        clearTimeout(x);
+
         if(res.cities){
           this.raws = res.cities;
           console.log("RAWS : ", this.raws);
