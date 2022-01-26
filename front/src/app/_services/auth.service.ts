@@ -1,7 +1,11 @@
+/**
+ * auth.service.ts
+ * Ce service permet de gérer l'authentification sur notre application.
+ */
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
 import { API_URL } from './api.service';
 
 const LS_KEY = 'logged';
@@ -16,11 +20,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials : any) : Observable<any>{
+  login(credentials : Credentials) : Observable<any>{
     return this.http.post(API_URL + 'login', credentials);
   }
 
-  register(credentials : any) : Observable<any>{
+  register(credentials : Credentials) : Observable<any>{
     return this.http.post(API_URL + 'register', credentials);
   }
 
@@ -41,7 +45,7 @@ export class AuthService {
   }
 }
 
-// export interface Credentials {
-//   email: string,
-//   password: string
-// }
+export interface Credentials {
+  email: string,
+  password: string
+}

@@ -1,3 +1,9 @@
+/**
+ * api.service.ts
+ * Ce service permet de créer des appels à notre API.
+ * Chaque fonction retourne un observable.
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
