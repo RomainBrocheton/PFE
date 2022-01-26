@@ -23,10 +23,12 @@ cd front && npm install
 cd ../server && npm install
 ```
 
+Vous devrez ensuite copier le contenu du fichier `./server/config.example.js` dans un nouveau fichier appelé `./server/config.js`.
+
 ### Base de données
 Nous utilisons MongoDB comme serveur de base de données. Pour des raisons pratiques, nous avons décidé d'utiliser un serveur cloud (afin de partager plus facilement les informations de celle-ci d'une machine à une autre). 
 
-Pour faire de même, il vous suffira de créer un compte sur [MongoDB Cloud](https://cloud.mongodb.com/) et de créer un projet. Vous pourrez ensuite dans la section `Databases` récupérer les informations de connexion à votre cluster en cliquant sur le bouton `Connect` puis `Connect your application`. Vous trouverez ensuite l'URL de connexion à insérer au bon endroit dans le code du serveur.
+Pour faire de même, il vous suffira de créer un compte sur [MongoDB Cloud](https://cloud.mongodb.com/) et de créer un projet. Vous pourrez ensuite dans la section `Databases` récupérer les informations de connexion à votre cluster en cliquant sur le bouton `Connect` puis `Connect your application`. Vous trouverez ensuite l'URL de connexion à remplacer dans `./server/config.js`.
 
 ## Utilisation normale
 Pour lancer l'application, merci d'éxecuter cette commande afin de lancer l'API :

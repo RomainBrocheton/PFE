@@ -1,12 +1,10 @@
 //---------- Mongo Init ----------
 
 var mongoose = require('mongoose');
-var uuidv4 = require('uuidv4');
-
+var { mongoUrl } = require('../config');
 // ---------- Connection ----------
 
-//mongoose.connect('mongodb://smartcity:sm0rtcity@ds147390.mlab.com:47390/smartcity', function( error ){
-mongoose.connect('mongodb+srv://teamplay:mongodb-mongodb@teamplaycluster.quhje.mongodb.net/apinode?retryWrites=true&w=majority', function( error ){
+mongoose.connect(mongoUrl, function( error ){
     if( error ) {
         throw error; 
     } else {

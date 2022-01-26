@@ -1,13 +1,12 @@
 //---------- Serveur Init ----------
-
-var port = process.env.PORT || 8080;
+var { port } = require('./config');
+var port = port || 8080;
 var configDirectory = 'server';
 var viewsDirectory = './';
 
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
-var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var miscellaneous = require('./treatment/miscellaneous');
 var database = require('./database/mongo');

@@ -86,6 +86,7 @@
       "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.0.4.tgz",
       "version": "1.0.4"
     },
+    "dotenv": "^14.3.2",
     "ee-first": {
       "integrity": "sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=",
       "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
