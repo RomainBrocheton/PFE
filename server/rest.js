@@ -1,6 +1,7 @@
 //---------- Serveur Init ----------
 var { port } = require('./config');
 var port = port || 8080;
+var HOST = '0.0.0.0';
 var configDirectory = 'server';
 var viewsDirectory = './';
 
@@ -29,7 +30,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //authorize access to public directory to server html, css, js, ...
 app.use( express.static( path.join( __dirname.substring( 0, __dirname.length-configDirectory.length ), viewsDirectory ) ) );
 
-app.listen(port);
+app.listen(port, HOST);
 
 var bash = require('./treatment/bash');
 bash.generateFiles();
