@@ -1,10 +1,9 @@
 //---------- Mongo Init ----------
 
 var mongoose = require('mongoose');
-var { mongoUrl } = require('../config');
 // ---------- Connection ----------
 
-mongoose.connect(mongoUrl, function( error ){
+mongoose.connect(process.env.MONGO_URL, function( error ){
     if( error ) {
         throw error; 
     } else {

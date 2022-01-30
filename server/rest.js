@@ -1,6 +1,5 @@
 //---------- Serveur Init ----------
-var { port } = require('./config');
-var port = port || 8080;
+var port = process.env.PORT || 8080;
 var HOST = '0.0.0.0';
 var configDirectory = 'server';
 var viewsDirectory = './';

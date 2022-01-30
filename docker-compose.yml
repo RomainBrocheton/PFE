@@ -5,7 +5,10 @@ services:
     build: ./server
     ports:
       - 8080:8080
-      
+    environment:
+      - MONGO_URL=mongodb+srv://teamplay:mongodb-mongodb@teamplaycluster.quhje.mongodb.net/apinode?retryWrites=true&w=majority
+      - PORT=8080
+
   front:
     build: ./front
     ports:
