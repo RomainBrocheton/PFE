@@ -1,5 +1,4 @@
 var database = require('./mongo');
-var uuidv4 = require('uuidv4');
 
 module.exports = {
     getLocation : function( city, cb ){
