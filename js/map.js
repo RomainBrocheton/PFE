@@ -78,7 +78,7 @@ map, direction, descriptionColor, numberRecColor, tabLatitudeRecSW, tabLatitudeR
     fleche.addTo(map);
 
     // zoom the map to the polyline
-    map.fitBounds(polyline.getBounds());
+    map.fitBounds(fleche.getBounds());
 
     arrowTab.push(fleche);
 
