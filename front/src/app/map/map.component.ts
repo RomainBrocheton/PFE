@@ -3,7 +3,7 @@ import * as L from 'leaflet';
 import 'leaflet-arrowheads';
 import { SharingService } from '../_services/sharing.service';
 
-const ZOOM_INIT = 7;
+const ZOOM_INIT = 14;
 const ZOOM_IN = 12;
 const ZOOM_MAX = 18;
 const ZOOM_MIN = 5;
@@ -47,23 +47,22 @@ export class MapComponent implements AfterViewInit {
       // this.map.panTo(new L.LatLng(this.lat, this.lon));
       this.map.flyTo(new L.LatLng(this.lat, this.lon));
 
-      if(this.lat != 0 && this.lon != 0)
-        this.map.setZoom(ZOOM_IN);
+      // if(this.lat != 0 && this.lon != 0)
+      //   this.map.setZoom(ZOOM_IN);
     });
   }
 
   private initMap(){
-    // this.map = L.map('map', {
-    //   center: [this.lat, this.lon],
-    //   zoom: ZOOM_INIT
-    // });
-      
-    this.map = L.map('map').locate({
+    this.map = L.map('map', {
+      center: [this.lat, this.lon],
+      zoom: ZOOM_INIT
+    }).locate({
       setView: true,
-      maxZoom: ZOOM_MAX
+      maxZoom: ZOOM_INIT
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: ZOOM_MAX,
       minZoom: ZOOM_MIN
     });
