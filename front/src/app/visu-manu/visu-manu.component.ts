@@ -83,13 +83,13 @@ export class VisuManuComponent implements OnInit {
     }
   }
 
-  handleGridFile(gridFile: FileList){
-    this.gridFile = gridFile.item(0);
+  handleGridFile(event : any){
+    this.gridFile = event.target.files[0];
     console.log("GridFile : " + this.gridFile);
   }
 
-  handleColorFile(colorFile: FileList){
-    this.colorFile = colorFile.item(0);
+  handleColorFile(event : any){
+    this.colorFile = event.target.files[0];
     console.log("ColorFile : " + this.colorFile);
   }
 
