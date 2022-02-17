@@ -49,6 +49,29 @@ export class MapComponent implements AfterViewInit {
 
       // if(this.lat != 0 && this.lon != 0)
       //   this.map.setZoom(ZOOM_IN);
+
+      //@ts-ignore
+      if(data.grid && data.color)
+      {
+        this.clearMap();
+
+        //@ts-ignore
+        if( data.color[0].includes(":") ){
+          //@ts-ignore
+          this.areaTraitementSeq(data.grid, () =>{
+            //@ts-ignore
+            this.areaColorTraitementSeq(data.color, function(){
+            });
+          });
+        }else{
+          //@ts-ignore
+          this.areaTraitement(data.grid, () =>{
+            //@ts-ignore
+            this.areaColorTraitement( data.color, function(){
+            });
+          });
+        }
+      };
     });
   }
 
