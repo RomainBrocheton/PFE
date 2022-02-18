@@ -44,11 +44,11 @@ export class MapComponent implements AfterViewInit {
     this.sharedService.sharedMessage.subscribe((data) => {
       this.lat = data.lat;
       this.lon = data.lon;
-      // this.map.panTo(new L.LatLng(this.lat, this.lon));
-      this.map.flyTo(new L.LatLng(this.lat, this.lon));
+      this.map.panTo(new L.LatLng(this.lat, this.lon));
+      // this.map.flyTo(new L.LatLng(this.lat, this.lon));
 
-      // if(this.lat != 0 && this.lon != 0)
-      //   this.map.setZoom(ZOOM_IN);
+      if(this.lat != 0 && this.lon != 0)
+        this.map.setZoom(ZOOM_IN);
 
       //@ts-ignore
       if(data.grid && data.color)
@@ -277,8 +277,7 @@ export class MapComponent implements AfterViewInit {
                   // @ts-ignore
                   var bounds = [ [parseFloat(tabLatitudeNE[i]), parseFloat(tabLongitudeNE[i])], [parseFloat(tabLatitudeSW[i]), parseFloat(tabLongitudeSW[i])] ];
                   // @ts-ignore
-                  var areaColor = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.8}).addTo(map);
-                  // map.fitBounds(bounds);
+                  var areaColor = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.8}).addTo(this.map);
                   
                   // On ajoute la zone colorée dans le tableau contenant toutes les zones colorées
                   tabAreaColor[i] = areaColor;

@@ -29,45 +29,41 @@ export class VisuManuComponent implements OnInit {
   }
 
   display(f: NgForm){
-    // TODO
-    // Le problème semble venir des fichiers qui ne sont pas lus par le formulaire, il récupère juste le path
-    // Je dois trouver un moyen de récupérer les fichiers eux-mêmes.
 
-    // if(f.value.grid && f.value.color)
     if(this.gridFile && this.colorFile)
     {
-      // this.gridFile = f.value.grid;
-      // this.colorFile = f.value.color;
-      // console.log("f.value.grid : " + f.value.grid);
-      // console.log("f.value.color : " + f.value.color);
       let file;
-      let GridLines;
-      let ColorLines;
+      // @ts-ignore
+      let gridLines;
+      // @ts-ignore
+      let colorLines;
+      let self = this;
+
       for(let i=0;i<2;i++){
 
-        if(i = 0){
+        if(i < 1){
           file = this.gridFile;
-          // file = f.value.grid;
         } else {
           file = this.colorFile;
-          // file = f.value.color;
         }
       
         // On instancie un FileReader pour récupérer le contenu du fichier
-        let reader = new FileReader();
-        reader.readAsText(file as Blob, "UTF-8");
+        let reader: FileReader = new FileReader();
+        reader.readAsBinaryString(file);
 
         // En cas de succès de lecture du fichier
-        reader.onload = function ( fileRead ) {
+        reader.onload = function () {
           
           // On récupère le fichier ligne par ligne dans un tableau
-          if( i = 0)
+          if(i < 1)
           {
             // @ts-ignore
-            gridLines = fileRead.target.result.split("\n");
+            gridLines = reader.result.split("\n");
+            // @ts-ignore
+            self.sharedService.nextMessage({lat: f.value.lat, lon: f.value.lon, grid: gridLines, color: colorLines});
           } else {
             // @ts-ignore
-            colorLines = fileRead.target.result.split('\n');
+            colorLines = reader.result.split('\n');
           }
         }
 
@@ -76,21 +72,17 @@ export class VisuManuComponent implements OnInit {
 
           // MESSAGE ERREUR ?
           console.log("Erreur dans la lecture des fichiers");
-        }
-        
-        this.sharedService.nextMessage({lat: f.value.lat, lon: f.value.lon, grid: GridLines, color: ColorLines});
+        }        
       }
     }
   }
 
   handleGridFile(event : any){
     this.gridFile = event.target.files[0];
-    console.log("GridFile : " + this.gridFile);
   }
 
   handleColorFile(event : any){
     this.colorFile = event.target.files[0];
-    console.log("ColorFile : " + this.colorFile);
   }
 
 }
