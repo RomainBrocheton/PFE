@@ -11,6 +11,7 @@ export class VisuManuComponent implements OnInit {
 
   @ViewChild('f', {static: true}) ngForm : NgForm | undefined ;
   formChangeSub : any;
+  
   gridFile: File | null = null;
   colorFile: File | null = null;
 

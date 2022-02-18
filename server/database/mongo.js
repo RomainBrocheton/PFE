@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 // ---------- Connection ----------
-const MONGO_URL = process.env.MONGO_URL || '';
+const MONGO_URL = process.env.MONGO_URL || 'mongodb+srv://teamplay:mongodb-mongodb@teamplaycluster.quhje.mongodb.net/apinode?retryWrites=true&w=majority';
 
 if(MONGO_URL === ''){
     throw 'Environment variable MONGO_URL is not set.';
