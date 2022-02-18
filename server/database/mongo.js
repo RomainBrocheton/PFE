@@ -2,8 +2,13 @@
 
 var mongoose = require('mongoose');
 // ---------- Connection ----------
+const MONGO_URL = process.env.MONGO_URL || '';
 
-mongoose.connect(process.env.MONGO_URL, function( error ){
+if(MONGO_URL === ''){
+    throw 'Environment variable MONGO_URL is not set.';
+}
+
+mongoose.connect(MONGO_URL, function( error ){
     if( error ) {
         throw error; 
     } else {
