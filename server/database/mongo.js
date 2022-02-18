@@ -1,8 +1,9 @@
 //---------- Mongo Init ----------
 
 var mongoose = require('mongoose');
+const config = require('../config');
 // ---------- Connection ----------
-const MONGO_URL = process.env.MONGO_URL || 'mongodb+srv://teamplay:mongodb-mongodb@teamplaycluster.quhje.mongodb.net/apinode?retryWrites=true&w=majority';
+const MONGO_URL = process.env.MONGO_URL || config.MONGO_URL;
 
 if(MONGO_URL === ''){
     throw 'Environment variable MONGO_URL is not set.';
