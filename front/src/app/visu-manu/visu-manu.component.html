@@ -3,11 +3,11 @@
     <input type="text" name="lon" placeholder="Longitude" ngModel required>
     <div class="input-file">
         <label for="grid">Fichier Grid</label>
-        <input type="file" name="grid" id="grid" ngModel required accept=".txt">
+        <input type="file" name="grid" id="grid" (change)="handleGridFile($event)" ngModel required accept=".txt">
     </div>
     <div class="input-file">
         <label for="color">Fichier Color</label>
-        <input type="file" name="color" id="color" ngModel required accept=".txt">
+        <input type="file" name="color" id="color" (change)="handleColorFile($event)" ngModel required accept=".txt">
     </div>
     <button type="submit" [disabled]="f.invalid">Afficher</button>
 </form>
