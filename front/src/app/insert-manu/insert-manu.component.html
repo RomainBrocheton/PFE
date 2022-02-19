@@ -1,10 +1,10 @@
-<form (ngSubmit)="display(f)" #f="ngForm">
+<form (ngSubmit)="insert(f)" #f="ngForm">
     <input type="text" name="city" placeholder="Ville" ngModel required>
-    <input type="text" name="lat" placeholder="Latitude" ngModel required>
-    <input type="text" name="lon" placeholder="Longitude" ngModel required>
+    <input type="text" name="latitude" placeholder="Latitude" ngModel required>
+    <input type="text" name="longitude" placeholder="Longitude" ngModel required>
     <input type="text" name="period" placeholder="Période (h)" ngModel required>
     <input type="text" name="granularity" placeholder="Granularité (m)" ngModel required>
-    <input type="text" name="seuil" placeholder="Seuil de voitures (voitures)" ngModel required>
+    <input type="text" name="thresholdVehicule" placeholder="Seuil de voitures (voitures)" ngModel required>
     <input type="text" name="timeDivisionStart" placeholder="Division du temps (timestamp)" ngModel required>
     <input type="text" name="timeDivisionEnd" placeholder="Division du temps (timestamp)" ngModel required>
     <div class="input-checkbox noborder">
@@ -17,11 +17,11 @@
     </div>
     <div class="input-file">
         <label for="grid">Fichier Grid</label>
-        <input type="file" name="grid" id="grid" ngModel required accept=".txt">
+        <input type="file" name="grid" id="grid" (change)="handleGridFile($event)" ngModel required accept=".txt">
     </div>
     <div class="input-file">
         <label for="color">Fichier Color</label>
-        <input type="file" name="color" id="color" ngModel required accept=".txt">
+        <input type="file" name="color" id="color" (change)="handleColorFile($event)" ngModel required accept=".txt">
     </div>
     <button type="submit" [disabled]="f.invalid">Insérer</button>
 </form>

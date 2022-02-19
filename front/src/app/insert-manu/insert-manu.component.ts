@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ApiService } from '../_services/api.service';
+import { AuthService } from '../_services/auth.service';
+import { ReaderService } from '../_services/reader.service';
 
 @Component({
   selector: 'app-insert-manu',
@@ -7,13 +10,46 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./insert-manu.component.scss']
 })
 export class InsertManuComponent implements OnInit {
+  gridFile : File  = new File([], '');
+  colorFile : File = new File([], '');
 
-  constructor() { }
+  constructor(private api : ApiService, private reader : ReaderService, private auth : AuthService) { }
 
   ngOnInit(): void {
   }
 
-  display(f: NgForm){
-    
+  insert(f: NgForm){
+    let gridInfo = f.value;
+
+    let flags = 0;
+    this.reader.read(this.gridFile).subscribe(res => {
+      gridInfo.gridFileLines = res;
+      flags++;
+      if(flags == 2)
+      this.completeInsert(gridInfo);
+    });
+
+    this.reader.read(this.colorFile).subscribe(res => {
+      gridInfo.colorFileLines = res;
+      flags++;
+
+      if(flags == 2)
+        this.completeInsert(gridInfo);
+    });
+  }
+
+  completeInsert(gridInfo : any){
+    console.log(gridInfo);
+    this.api.post('insertFiles', {data: gridInfo, token: this.auth.getUser()}).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  handleGridFile(event : any){
+    this.gridFile = event.target.files[0];
+  }
+
+  handleColorFile(event : any){
+    this.colorFile = event.target.files[0];
   }
 }
