@@ -1,3 +1,6 @@
+/**
+ * Ce service permet de partager des observables entre composants.
+ */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

@@ -43,16 +43,16 @@ export class VisuAutoComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if(this.ngForm != undefined)
-      this.formChangeSub = this.ngForm.form.valueChanges.subscribe(x => {
+      this.formChangeSub = this.ngForm.form.valueChanges.subscribe(x => { // lorsqu'un champ du formulaire est modifié
         if(x.lat == undefined || x.lat == "")
           x.lat = 0;
         if(x.lon == undefined || x.lon == "")
           x.lon = 0;
 
-        this.sharedService.nextMessage({lat: x.lat, lon: x.lon});
+        this.sharedService.nextMessage({lat: x.lat, lon: x.lon}); // on envoie a la carte la nouvelle position
       });
       
-      this.getRaws().then((success) => {
+      this.getRaws().then((success) => {  // on récupère les villes à afficher
         if(!success)
           this.empty = true;
         else  
@@ -61,6 +61,7 @@ export class VisuAutoComponent implements OnInit {
 
   }
 
+  // au submit
   display(f: NgForm){
     let v = {
       data: {},
@@ -89,10 +90,10 @@ export class VisuAutoComponent implements OnInit {
 
     });
 
-    this.sharedService.nextMessage({lat: this.lat, lon: this.lon});
+    this.sharedService.nextMessage({lat: this.lat, lon: this.lon}); // on envoie les coordonnées à la carte
   }
 
-  timeoutCrash(){
+  timeoutCrash(){ // en cas de non réponse de l'API
     alert('Impossible de récupérer les informations depuis notre API 😥');
     console.error('Notre API n a pas répondu à temps.')
   }
@@ -106,7 +107,7 @@ export class VisuAutoComponent implements OnInit {
       this.api.post('getCities', {
         token: this.auth.getUser()
       }).subscribe(res => {
-        clearTimeout(x);
+        clearTimeout(x);  // si réponse, on clear le timeout (il s'affichera qu'en cas de non réponse)
 
         if(res.cities){
           this.raws = res.cities;
@@ -119,7 +120,7 @@ export class VisuAutoComponent implements OnInit {
     });
   }
 
-  setCity(value : String){
+  setCity(value : String){  // ville choisie, on filtre les périodes
     this.currentCity = value;
     this.periods = this.raws.filter((v : any) =>  v.city == value).map((v : any, i : any) => { return v.period; })
 
@@ -131,32 +132,32 @@ export class VisuAutoComponent implements OnInit {
     })
   }
 
-  setPeriod(value : String){
+  setPeriod(value : String){  // periode choisie, on filtre les granularités
     this.currentPeriod = value;
     this.granularities = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == value).map((v : any, i : any) => { return v.granularity; })
   }
 
-  setGranularity(value : String){
+  setGranularity(value : String){ // granularité choisie, on filtre les seuils
     this.currentGranularity = value;
     this.seuils = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == this.currentPeriod && v.granularity == value).map((v : any, i : any) => { return v.thresholdVehicule; })
   }
 
-  setThresholdVehicule(value : String){
+  setThresholdVehicule(value : String){ // seuil choisi, on filtre les divisions min
     this.currentSeuil = value;
     this.divisionsMin = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == this.currentPeriod && v.granularity == this.currentGranularity && v.thresholdVehicule == value).map((v : any, i : any) => { return v.timeDivisionStart; })
   }
 
-  setDivisionMin(value : String){
+  setDivisionMin(value : String){ // division min choisie, on filtre les divisions max
     this.currentDivisionMin = value;
     this.divisionsMax = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == this.currentPeriod && v.granularity == this.currentGranularity && v.thresholdVehicule == this.currentSeuil && v.timeDivisionStart == value).map((v : any, i : any) => { return v.timeDivisionEnd; })
   }
 
-  setDivisionMax(value : String){
+  setDivisionMax(value : String){ // division max choisie, on filtre les directions
     this.currentDivisionMax = value;
     this.directions = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == this.currentPeriod && v.granularity == this.currentGranularity && v.thresholdVehicule == this.currentSeuil && v.timeDivisionStart == this.currentDivisionMin && v.timeDivisionEnd == value).map((v : any, i : any) => { return v.direction; })
   }
 
-  setDirection(value : String){
+  setDirection(value : String){ // direction choisie, on filtre les auterus
     this.currentDirection = value;
     this.authors = this.raws.filter((v : any) =>  v.city == this.currentCity && v.period == this.currentPeriod && v.granularity == this.currentGranularity && v.thresholdVehicule == this.currentSeuil && v.timeDivisionStart == this.currentDivisionMin && v.timeDivisionEnd == this.currentDivisionMax && v.direction == value).map((v : any, i : any) => { return v.author; })
   }

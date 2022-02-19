@@ -15,13 +15,16 @@ export class InscriptionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Gère l'inscription à l'application 
+   */
   inscription(f : NgForm){
     this.auth.register(f.value).subscribe(res => {
       if(res.error){
         alert(res.error)
       }
       else{
-        this.router.navigateByUrl('/connexion');
+        this.router.navigateByUrl('/connexion');  // Si l'inscription a fonctionné, on redirige vers la page de connexion
       }
     });
   }

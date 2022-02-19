@@ -9,15 +9,12 @@ import { Observable } from 'rxjs';
 import { API_URL } from './api.service';
 
 const LS_KEY = 'logged';
-const TTL_KEY = 'expiry';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private user : any = null;
-
   constructor(private http: HttpClient) { }
 
   login(credentials : Credentials) : Observable<any>{

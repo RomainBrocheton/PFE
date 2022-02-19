@@ -1,3 +1,7 @@
+/**
+ * Ce service permet de lire un fichier texte. 
+ * La méthode read retourne une observable contenant les lignes du fichier sous forme d'array
+ */
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 

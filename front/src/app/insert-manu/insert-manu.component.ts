@@ -21,12 +21,12 @@ export class InsertManuComponent implements OnInit {
   insert(f: NgForm){
     let gridInfo = f.value;
 
-    let flags = 0;
+    let flags = 0; // permet d'attendre que les deux subscribe soient resolved
     this.reader.read(this.gridFile).subscribe(res => {
       gridInfo.gridFileLines = res;
       flags++;
       if(flags == 2)
-      this.completeInsert(gridInfo);
+        this.completeInsert(gridInfo);
     });
 
     this.reader.read(this.colorFile).subscribe(res => {
@@ -45,6 +45,9 @@ export class InsertManuComponent implements OnInit {
     });
   }
 
+  /** 
+   * Ces deux méthodes sont appellées lorsqu'un fichier est chargé
+  */
   handleGridFile(event : any){
     this.gridFile = event.target.files[0];
   }

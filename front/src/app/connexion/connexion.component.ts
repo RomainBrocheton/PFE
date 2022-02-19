@@ -14,10 +14,13 @@ export class ConnexionComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.auth.isLogged()){
-      this.router.navigateByUrl('/visu');
+      this.router.navigateByUrl('/visu'); // Page par défaut
     }
   }
 
+  /**
+   * Gére la connexion à l'application.
+   */
   connexion(f : NgForm){
     this.auth.login(f.value).subscribe(res => {
 
@@ -25,8 +28,8 @@ export class ConnexionComponent implements OnInit {
         alert(res.error)
       }
       else{
-        this.auth.setUser(res.token);
-        location.href = '/';
+        this.auth.setUser(res.token); // on stocke le token utilisateur
+        location.href = '/';          // on redirige à la racine
       }
     });
   }

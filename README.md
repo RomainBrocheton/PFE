@@ -40,7 +40,7 @@ cd front && npm install
 cd ../server && npm install
 ```
 
-Dans le fichier `docker-compose.yml`, renseignez l'adresse de la base de données Mongo DB dans les variables d'environnement de l'image serveur.
+Dans le fichier `docker-compose.yml`, renseignez l'adresse de la base de données Mongo DB dans les variables d'environnement de l'image
 
 Pour lancer l'application, il vous suffit de construire les images Docker et de lancer le container :
 ```
