@@ -13,10 +13,8 @@ tabArea: Array<L.Rectangle>,		tabAreaColor: Array<L.Rectangle>,
 tabLongitudeSW: Array<string>, tabLongitudeNE: Array<string>,
 tabLatitudeSW: Array<string>, 	tabLatitudeNE: Array<string>;
 
-var tabRectangles, tabLongitudeRecSW: Array<string>, tabLatitudeRecSW: Array<string>, tabLongitudeRecSE: Array<string>, tabLatitudeRecSE: Array<string>, tabLongitudeRecNW: Array<string>, tabLatitudeRecNW: Array<string>, size, lines, rectangle, rectangle1, rectangle2, tabLongitudeRecNE: Array<string>, tabLatitudeRecNE: Array<string>, tabNumberRec, numberRec: string, latitudeRecSW, longitudeRecSW, latitudeRecNE, longitudeRecNE, numberRecColor, descriptionColor, date, number, hour, longitude, latitude, tabLongitude, tabLatitude, tabHour, tabNumber, tabDate, newLine, marker, color, newLineCoordinates, directionsService, directionsDisplay, tabMakers, fleche1, tabFleches;
+var tabLongitudeRecSW: Array<string>, tabLatitudeRecSW: Array<string>, tabLongitudeRecSE: Array<string>, tabLatitudeRecSE: Array<string>, tabLongitudeRecNW: Array<string>, tabLatitudeRecNW: Array<string>, tabLongitudeRecNE: Array<string>, tabLatitudeRecNE: Array<string>, tabNumberRec, numberRec: string, latitudeRecSW, longitudeRecSW, latitudeRecNE, longitudeRecNE, numberRecColor;
 var arrowTab: Array<L.Polyline>;
-
-var init = true;
 
 const mapAreaColor = [{name: "EMERGING", color: "#009900"}, 
                 {name: "DECREASING", color: "#b32d00"}, 

@@ -58,7 +58,6 @@ export class VisuAutoComponent implements OnInit {
         else  
           this.cities = this.raws.map((v : any, i : any) => { return v.city; })
       });
-
   }
 
   // au submit
@@ -69,28 +68,47 @@ export class VisuAutoComponent implements OnInit {
     };
 
     v.data = f.value;
+    let self = this;
 
-    this.api.post('getGridFile', v).subscribe(res => {
-      if(res.success)
-        this.gridFile = res.result.lines;
-      else
-        alert('Une erreur est survenue');
+    let myGriFile = function getGridFile(){
+      return new Promise((resolve, reject) => {
+        self.api.post('getGridFile', v).subscribe(res => {
+          if(res.success){
+            self.gridFile = res.result.lines;
+            resolve("OK");
+          }
+          else {
+            alert('Une erreur est survenue');
+            reject("NOK");
+          }
+        });
+      });
+    }
+    
+    let myColorFile = function getColorFile(){
+      return new Promise((resolve, reject) => {
+        self.api.post('getColorFile', v).subscribe(res => {
+          if(res.success){
+            self.colorFile = res.lines;
+            resolve("OK");
+          } else {
+            alert('Une erreur est survenue');
+            reject("NOK");
+          }    
+        });
+      });
+    }
 
-      console.log(this.gridFile);
-
+    // On attend que la récupération des fichiers grid et color dans la BDD soit terminée avant de les envoyer au composant map pour qu'il s'occupe de l'affichage
+    myGriFile()
+    .then(() => myColorFile())
+    .then(() => {
+      this.sharedService.nextMessage({lat: this.lat, lon: this.lon, grid: this.gridFile, color: this.colorFile}); // on envoie à la map
+    }).catch((error) => {
+      console.log("Une erreur est survenue : " + error);
+      console.log("this.gridFile : " + this.gridFile);
+      console.log("this.colorFile : " + this.colorFile);
     });
-
-    this.api.post('getColorFile', v).subscribe(res => {
-      if(res.success)
-        this.colorFile = res.lines;
-      else
-        alert('Une erreur est survenue');
-      
-      console.log(this.colorFile);
-
-    });
-
-    this.sharedService.nextMessage({lat: this.lat, lon: this.lon}); // on envoie les coordonnées à la carte
   }
 
   timeoutCrash(){ // en cas de non réponse de l'API
