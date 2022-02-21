@@ -94,20 +94,17 @@ export class MapComponent implements AfterViewInit {
   drawLine(centrelat: number, centrelong: number, calculatedLat: any, calculatedLong: any, couleur: any, 
     direction: string, descriptionColor: string, numberRecColor: string, tabLatitudeRecSW: any, tabLatitudeRecNE: any){
     
-        // Crée un polyline coloré sur la map à partir d'un tableau de points LatLng
         var latlngs = [
-            [new L.LatLng(centrelat, centrelong)],
-            [new L.LatLng(calculatedLat, calculatedLong)]
+          [centrelat, centrelong],
+          [calculatedLat, calculatedLong]
         ];
     
         // Documentation du plugin permettant de mettre des flèches aux polyline
         // https://github.com/slutske22/leaflet-arrowheads
     
-        var fleche = L.polyline(latlngs, {color: couleur, opacity: 0.8}).arrowheads({});
+        // @ts-ignore
+        var fleche = L.polyline(latlngs, {color: couleur, opacity: 0.8}).arrowheads({size: '5px'});
         fleche.addTo(this.map);
-    
-        // zoom the map to the polyline
-        this.map.fitBounds(fleche.getBounds());
     
         arrowTab.push(fleche);
     
@@ -230,7 +227,6 @@ export class MapComponent implements AfterViewInit {
       tabLatitudeNE[i] = latitudeNE;
       
       // On crée notre zone
-      // let bounds = [ [new L.LatLng(latitudeNE, longitudeNE)], [new L.LatLng(latitudeSW, longitudeSW)] ];
       var bounds = [ [latitudeNE, longitudeNE], [latitudeSW, longitudeSW] ];
       // @ts-ignore
       var area = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(this.map);
@@ -354,8 +350,7 @@ export class MapComponent implements AfterViewInit {
         
       var bounds = [ [latitudeRecNE, longitudeRecNE], [latitudeRecSW, longitudeRecSW] ];
       // @ts-ignore
-      var rectangle = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(map);
-      this.map.fitBounds(bounds);
+      var rectangle = L.rectangle(bounds, {color:"#3d3d29", weight: 0.4, fillOpacity: 0.0}).addTo(this.map);      
 
       tabArea[i] = rectangle;
     }
@@ -371,6 +366,9 @@ export class MapComponent implements AfterViewInit {
     for (var i = 0; i < lines.length-1; i++) {
     //exemple de ligne
     //201977 W:LATENT,DECREASING,EMERGING SW:DECREASING NW:DECREASING NE:EMERGING NONE:DECREASING
+
+      console.log("lines.length : " + lines.length);
+      console.log("i : " + i);
 
       var champs = lines[i].split(' ');
       numberRecColor = champs[0];
@@ -451,8 +449,7 @@ export class MapComponent implements AfterViewInit {
                     
               var bounds = [ [parseFloat(tabLatitudeRecNE[i]), parseFloat(tabLongitudeRecNE[i])], [parseFloat(tabLatitudeRecSW[i]), parseFloat(tabLongitudeRecSW[i])] ];
               // @ts-ignore
-              var rectangle1 = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.5}).addTop(map);
-              this.map.fitBounds(bounds);                        
+              var rectangle1 = L.rectangle(bounds, {color: mapAreaColor[ indexMapAreaColor ].color, opacity: 0.0, weight: 0, fillOpacity: 0.5}).addTo(this.map);
                         
               tabAreaColor[i] = rectangle1;
 
