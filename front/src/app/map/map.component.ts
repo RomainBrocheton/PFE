@@ -149,36 +149,6 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-  /* --------------------------- READFILE() --------------------------- */
-  // @ts-ignore
-  readFile( file, _callback ) {
-    // Si le fichier est ok
-    if (file) {
-      
-      // On instancie un FileReader pour récupérer le contenu du fichier
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-
-      // En cas de succès de lecture du fichier
-      reader.onload = function ( fileRead ) {
-        
-        // On récupère le fichier ligne par ligne dans un tableau
-        // @ts-ignore
-        var lines = fileRead.target.result.split('\n');
-
-        // On retourne un tableau contenant les lignes du fichier
-        _callback( file.name, lines );
-      }
-
-      // En cas d'echec de lecture du fichier
-      reader.onerror = function ( e ) {
-
-          // MESSAGE ERREUR ?
-          _callback( file.name, null );
-      }
-    }
-  }
-
   /* --------------------------- TREATMENT --------------------------- */
   // Création des zones en fonction des informations données dans le tableau mis en argument
   // @ts-ignore
