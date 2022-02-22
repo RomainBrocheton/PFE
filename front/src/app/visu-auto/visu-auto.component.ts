@@ -116,7 +116,7 @@ export class VisuAutoComponent implements OnInit {
     console.error('Notre API n a pas répondu à temps.')
   }
 
-  async getRaws(){
+  async getRaws(){  // récupère les lignes pour remplir le formulaire
     let x = setTimeout(() => {
       this.timeoutCrash();
     }, 10000);
