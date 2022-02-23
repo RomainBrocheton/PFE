@@ -220,7 +220,6 @@ export class MapComponent implements AfterViewInit {
 
   // On effectue un parcours ligne par ligne
   for ( var i = 0 ; i < lines.length  ; i++ ) {
-      // console.log("areaColorTraitement : " + i);
       
       // On récupère le numéro de la zone
       let idColorArea = lines[i].substring( 0, lines[i].indexOf( " " ) );
@@ -336,9 +335,6 @@ export class MapComponent implements AfterViewInit {
     for (var i = 0; i < lines.length-1; i++) {
     //exemple de ligne
     //201977 W:LATENT,DECREASING,EMERGING SW:DECREASING NW:DECREASING NE:EMERGING NONE:DECREASING
-
-      console.log("lines.length : " + lines.length);
-      console.log("i : " + i);
 
       var champs = lines[i].split(' ');
       numberRecColor = champs[0];
