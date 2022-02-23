@@ -48,6 +48,7 @@ export class InsertAutoComponent implements OnInit {
   completeInsert(gridInfo : any){
     this.api.post('insertFiles', {data: gridInfo, token: this.auth.getUser()}).subscribe(res => {
       console.log(res);
+      alert('Insertion OK');
     });
   }
 

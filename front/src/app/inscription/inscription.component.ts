@@ -24,6 +24,7 @@ export class InscriptionComponent implements OnInit {
         alert(res.error)
       }
       else{
+        alert('Inscription OK');
         this.router.navigateByUrl('/connexion');  // Si l'inscription a fonctionné, on redirige vers la page de connexion
       }
     });
