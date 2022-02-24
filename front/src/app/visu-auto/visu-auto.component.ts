@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ApiService } from '../_services/api.service';
 import { AuthService } from '../_services/auth.service';
 import { SharingService } from '../_services/sharing.service';
+import { RemoveDuplicatesPipe } from '../_services/remove-duplicates.pipe';
 
 @Component({
   selector: 'app-visu-auto',
@@ -59,6 +60,7 @@ export class VisuAutoComponent implements OnInit {
           this.cities = this.raws.map((v : any, i : any) => { return v.city; })
       });
   }
+
 
   // au submit
   display(f: NgForm){

@@ -14,6 +14,7 @@ import { ConnexionComponent } from './connexion/connexion.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RemoveDuplicatesPipe } from './_services/remove-duplicates.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     InsertManuComponent,
     InsertAutoComponent,
     ConnexionComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    RemoveDuplicatesPipe
   ],
   imports: [
     BrowserModule,

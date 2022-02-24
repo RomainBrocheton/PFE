@@ -3,7 +3,7 @@
         <p class="label">Ville</p>
         <div class="input-select">
             <select name="city" id="city" ngModel (ngModelChange)="setCity($event)" required>
-                <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+                <option *ngFor="let city of cities | removeDuplicates" value="{{city}}">{{city}}</option>
             </select>
         </div>
     </div>
@@ -12,7 +12,7 @@
         <p class="label">Période (h)</p>
         <div class="input-select">
             <select name="period" id="period" ngModel (ngModelChange)="setPeriod($event)" required>
-                <option *ngFor="let period of periods" value="{{period}}">{{period}}</option>
+                <option *ngFor="let period of periods | removeDuplicates" value="{{period}}">{{period}}</option>
             </select>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <p class="label">Granularité (m)</p>
         <div class="input-select">
             <select name="granularity" id="granularity" ngModel (ngModelChange)="setGranularity($event)" required>
-                <option *ngFor="let granularity of granularities" value="{{granularity}}">{{granularity}}</option>
+                <option *ngFor="let granularity of granularities | removeDuplicates" value="{{granularity}}">{{granularity}}</option>
             </select>
         </div>
     </div>
@@ -30,7 +30,7 @@
         <p class="label">Seuil de voitures (voitures)</p>
         <div class="input-select">
             <select name="thresholdVehicule" id="thresholdVehicule" ngModel (ngModelChange)="setThresholdVehicule($event)" required>
-                <option *ngFor="let seuil of seuils" value="{{seuil}}">{{seuil}}</option>
+                <option *ngFor="let seuil of seuils | removeDuplicates" value="{{seuil}}">{{seuil}}</option>
             </select>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <p class="label">Division du temps (min)</p>
         <div class="input-select">
             <select name="timeDivisionStart" id="timeDivisionStart" ngModel (ngModelChange)="setDivisionMin($event)" required>
-                <option *ngFor="let time of divisionsMin" value="{{time}}">{{time}}</option>
+                <option *ngFor="let time of divisionsMin | removeDuplicates" value="{{time}}">{{time}}</option>
             </select>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <p class="label">Division du temps (max)</p>
         <div class="input-select">
             <select name="timeDivisionEnd" id="timeDivisionEnd" ngModel (ngModelChange)="setDivisionMax($event)" required>
-                <option *ngFor="let time of divisionsMax" value="{{time}}">{{time}}</option>
+                <option *ngFor="let time of divisionsMax | removeDuplicates" value="{{time}}">{{time}}</option>
             </select>
         </div>
     </div>
@@ -57,7 +57,7 @@
         <p class="label">Direction</p>
         <div class="input-select">
             <select name="direction" id="direction" ngModel (ngModelChange)="setDirection($event)" required>
-                <option *ngFor="let direction of directions" value="{{direction}}">{{direction}}</option>
+                <option *ngFor="let direction of directions | removeDuplicates" value="{{direction}}">{{direction}}</option>
             </select>
         </div>
     </div>
@@ -66,7 +66,7 @@
         <p class="label">Auteur</p>
         <div class="input-select">
             <select name="author" id="author" ngModel required>
-                <option *ngFor="let author of authors" value="{{author}}">{{author}}</option>
+                <option *ngFor="let author of authors | removeDuplicates" value="{{author}}">{{author}}</option>
             </select>
         </div>
     </div>
