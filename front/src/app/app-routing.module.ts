@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { InscriptionComponent } from './inscription/inscription.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   { 
     path: '', component: HomepageComponent, children: [
       { path: '', component: VisuManuComponent },
+      { path: 'about', component: AboutComponent },
       { path: 'visu', component: VisuManuComponent },
       { path: 'visu/automatique', component: VisuAutoComponent },
       { path: 'visu/manuelle', component: VisuManuComponent },

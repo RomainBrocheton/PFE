@@ -200,3 +200,15 @@ form{
     }
 }
 
+table{
+    border-collapse: collapse;
+    td, th{
+        border: solid 1px white;
+        padding: 1/2 * $margin;
+
+        ul{
+            list-style: none;
+        }
+    }
+    
+}
